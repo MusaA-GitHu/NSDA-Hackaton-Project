@@ -296,7 +296,7 @@ button, .btn {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    padding: 10px 0; /* Adjusted from fixed height */
 }
 
 .logo-area-centered {
@@ -410,12 +410,18 @@ button, .btn {
 }
 
 .mobile-nav {
-    position: absolute; /* Position relative to header */
+    position: fixed; /* Changed to fixed to overlay content */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: var(--color-surface);
-    border-top: 1px solid var(--color-border);
-    padding: 16px 24px;
+    background-color: rgba(253, 254, 255, 0.95); /* Use background with opacity */
+    backdrop-filter: blur(5px); /* Add a blur effect */
+    padding: 80px 24px 24px 24px; /* Add padding-top to clear header */
+    z-index: 999; /* Below header but above content */
+    overflow-y: auto;
 }
 
 .mobile-nav.hidden {
@@ -425,18 +431,15 @@ button, .btn {
 .mobile-nav a {
     padding: 12px 0;
     border-bottom: 1px solid var(--color-border);
-    color: var(--color-text-dark);
-    font-weight: 500;
+    color: var(--color-primary-dark);
+    font-weight: 600;
+    font-size: 18px;
 }
 
 .mobile-nav a:last-child {
     border-bottom: none;
 }
 
-/* Hide mobile menu button on desktop */
-@media (min-width: 992px) {
-    .mobile-menu-btn { display: none; }
-}
 
 /* --------------------
    5. MAIN CONTENT LAYOUT
@@ -448,7 +451,7 @@ main {
 
 /* New Inspirational Banner Styles */
 .inspirational-banner {
-    background: var(--color-primary);
+    background:var(--color-primary-dark);
     color: white;
     padding:2 24px 32px;
     border-radius: var(--radius-lg);
@@ -1088,6 +1091,69 @@ table td:last-child {
     font-weight: 500;
 }
 
+/* New About Section Tab Styles */
+.about-container {
+    padding: 0;
+    overflow: hidden;
+}
+
+.about-tabs {
+    display: flex;
+    background-color: var(--primary-pale);
+}
+
+.about-tab {
+    flex: 1;
+    padding: 16px;
+    border: none;
+    background-color: transparent;
+    color: var(--color-text-light);
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    border-bottom: 3px solid transparent;
+}
+
+.about-tab:hover {
+    background-color: var(--color-border);
+    color: var(--color-primary);
+}
+
+.about-tab.active {
+    color: var(--color-primary-dark);
+    border-bottom-color: var(--color-secondary);
+    background-color: var(--color-surface);
+}
+
+.about-content-wrapper {
+    position: relative;
+    padding: 32px;
+    min-height: 250px; /* Adjust as needed */
+}
+
+.about-content {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    right: 32px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+}
+
+.about-content.active {
+    position: relative; /* Take up space when active */
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+
 
 /* --------------------
    11. FOOTER
@@ -1121,6 +1187,24 @@ footer {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 8px;
+}
+.social-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.social-links a {
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--transition-speed);
+}
+
+.social-links a:hover {
+    color: white;
+}
+
+.social-links i {
+    width: 20px;
 }
 
 .footer-bottom {
@@ -1242,109 +1326,242 @@ footer {
    13. MEDIA QUERIES (Responsiveness)
    -------------------- */
 
-/* Tablet and Desktop Styles */
+/* Mobile First Approach: Base styles are for mobile */
+
+/* General Mobile adjustments */
+.header-content {
+    padding: 5px 0;
+}
+
+.logo-text h1 {
+    font-size: 14px;
+}
+.hero h2 {
+    font-size: 28px;
+}
+.hero-buttons {
+    flex-direction: column;
+}
+.hero-buttons .btn {
+    width: 100%;
+}
+.form-group-row {
+    flex-direction: column;
+    gap: 0;
+}
+.content-card {
+    padding: 24px;
+}
+table th, table td {
+    padding: 12px 8px;
+    font-size: 14px;
+}
+.filters-bar {
+    justify-content: flex-start;
+}
+.desktop-nav {
+    display: none;
+}
+.mobile-menu-btn {
+    display: block;
+}
+
+/* Tablet Styles */
 @media (min-width: 768px) {
+    .header-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .desktop-nav {
+        display: flex;
+        align-items: center;
+    }
     .mobile-menu-btn {
         display: none;
     }
-    .header-content {
-        justify-content: center; /* Center nav on tablet */
+    .hero h2 {
+        font-size: 36px;
     }
-    .header-content .desktop-nav {
-        display: flex;
+    .hero-buttons {
+        flex-direction: row;
     }
-
-    /* Home Dashboard */
+    .hero-buttons .btn {
+        width: auto;
+    }
     .dashboard-grid {
         grid-template-columns: 1fr 2fr;
     }
-    
+    .form-group-row {
+        flex-direction: row;
+    }
     .azkar-grid {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
+}
 
-    .form-group-row {
+/* Desktop Styles */
+@media (min-width: 992px) {
+    .header-content {
         flex-direction: row;
     }
 }
 
-
-@media (min-width: 992px) {
-    .header-content {
-        justify-content: space-between; /* Revert to space-between on larger screens */
-    }
-}
-
+/* RTL Adjustments */
 [dir="rtl"] .logo-area {
-    /* Ensure logo text is aligned correctly if it wraps */
     text-align: left;
 }
-
 [dir="rtl"] .hero-buttons {
     flex-direction: row-reverse;
 }
-
 [dir="rtl"] .card-header {
     flex-direction: row-reverse;
 }
-
 [dir="rtl"] .prayer-list li {
     flex-direction: row-reverse;
 }
-
 [dir="rtl"] .form-group label {
     text-align: right;
 }
-
 [dir="rtl"] .form-group-row {
     flex-direction: row-reverse;
 }
-
 [dir="rtl"] .content-card li {
     border-left: none;
     border-right: 3px solid var(--color-secondary);
 }
-
 [dir="rtl"] .language-switcher-nav i {
     right: auto;
     left: 16px;
 }
-
 [dir="rtl"] table th, [dir="rtl"] table td {
     text-align: right;
 }
-
 [dir="rtl"] table td:last-child {
     text-align: center; /* Keep action buttons centered */
 }
 
-@media (max-width: 767px) {
-    .logo-text h1 {
-        font-size: 14px;
-    }
-    
-    .hero-buttons {
-        flex-direction: column;
-    }
-    .hero-buttons button {
-        width: 100%;
-    }
-    
-    .form-group-row {
-        flex-direction: column;
-        gap: 0;
-    }
-    
-    .content-card {
-        padding: 24px;
-    }
-    
-    table th, table td {
-        padding: 12px 8px;
-        font-size: 14px;
-    }
-    
-    .filters-bar {
-        justify-content: flex-start;
-    }
+
+/* --------------------
+   14. PDF VIEWER
+   -------------------- */
+
+#pdf-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+#pdf-viewer.hidden-section {
+    display: none;
+}
+
+#pdf-viewer-container {
+    width: 95%;
+    height: 95%;
+    background-color: var(--color-background);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+#pdf-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+}
+
+#pdf-controls button, #pdf-controls a {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    color: var(--color-text-dark);
+}
+
+#pdf-controls button:hover, #pdf-controls a:hover {
+    background-color: var(--primary-pale);
+    border-color: var(--primary-light);
+}
+
+#close-pdf-viewer {
+    margin-right: auto;
+    background-color: var(--pink-color);
+    color: white;
+    border-color: var(--pink-color);
+}
+#close-pdf-viewer:hover{
+    background-color: darkred;
+}
+
+.page-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+#page-num-input {
+    width: 60px;
+    text-align: center;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 6px;
+}
+
+#pdf-render-area {
+    flex-grow: 1;
+    overflow: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+#pdf-canvas {
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    border: 1px solid var(--color-border);
+}
+
+#thumbnail-container {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    overflow-x: auto;
+    height: 120px; /* Fixed height for thumbnails */
+    flex-shrink: 0;
+}
+
+#thumbnail-container .thumbnail {
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color var(--transition-speed);
+    max-height: 100px;
+    border-radius: 4px;
+}
+
+#thumbnail-container .thumbnail.active {
+    border-color: var(--color-secondary);
+}
+
+#thumbnail-container .thumbnail:hover {
+    border-color: var(--primary-light);
 }

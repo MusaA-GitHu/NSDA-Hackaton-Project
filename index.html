@@ -36,13 +36,13 @@
                 </button>
                 <!-- Desktop Nav -->
                 <nav class="desktop-nav">
-                    <a href="#" onclick="navigateTo('home')">Home</a>
-                    <a href="#" onclick="navigateTo('mission')">About</a>
-                    <a href="#" onclick="navigateTo('events')">Prayer Times</a>
-                    <a href="#" onclick="navigateTo('events')">Events</a>
-                    <a href="#" onclick="navigateTo('sectors')">Volunteers</a>
-                    <a href="#" onclick="navigateTo('library')">Library</a>
-                    <a href="#" onclick="navigateTo('signup')">Join</a>
+                    <a href="#" onclick="navigateTo('home')" data-i18n-key="navHome">Home</a>
+                    <a href="#" onclick="navigateTo('about')" data-i18n-key="navAbout">About</a>
+                    <a href="#" onclick="navigateTo('library')" data-i18n-key="navLibrary">Library</a>
+                    <a href="#" onclick="navigateTo('halaqat')" data-i18n-key="navHalaqat">Halaqat</a>
+                    <a href="#" onclick="navigateTo('events')" data-i18n-key="navEvents">Events</a>
+                    <a href="#" onclick="navigateTo('sectors')" data-i18n-key="navSectors">Sectors</a>
+                    <a href="#" onclick="navigateTo('signup')" data-i18n-key="navSignUp">Join</a>
                     <a href="#" onclick="navigateTo('contact')">Contact</a>
                     <div class="language-switcher-nav">
                         <select id="lang-select-nav" onchange="setLanguage(this.value)">
@@ -60,13 +60,13 @@
         <!-- Mobile Menu (Hidden by default) -->
         <div id="mobile-menu" class="mobile-nav hidden">
             <a href="#" onclick="navigateTo('home')" data-i18n-key="navHome">Home</a>
-            <a href="#" onclick="navigateTo('mission')" data-i18n-key="navAbout">About</a>
+            <a href="#" onclick="navigateTo('about')" data-i18n-key="navAbout">About</a>
             <a href="#" onclick="navigateTo('library')" data-i18n-key="navLibrary">Library</a>
             <a href="#" onclick="navigateTo('halaqat')" data-i18n-key="navHalaqat">Halaqat</a>
             <a href="#" onclick="navigateTo('events')" data-i18n-key="navEvents">Events</a>
-            <a href="#" onclick="navigateTo('sectors')" data-i18n-key="navSectors">Join Sector</a>
-            <a href="#" onclick="navigateTo('signin')" data-i18n-key="navSignIn">Sign In</a>
-            <a href="#" onclick="navigateTo('signup')" data-i18n-key="navSignUp">Sign Up</a>
+            <a href="#" onclick="navigateTo('sectors')" data-i18n-key="navSectors">Sectors</a>
+            <a href="#" onclick="navigateTo('signup')" data-i18n-key="navSignUp">Join</a>
+            <a href="#" onclick="navigateTo('contact')">Contact</a>
         </div>
     </header>
 
@@ -87,7 +87,7 @@
         <!-- SECTION: HOME -->
         <section id="home" class="active-section">
             <div class="hero">
-                <h2 data-i18n-key="heroTitle">Welcome to the Muslim Student Jemea Portal</h2>
+                <h2 data-i18n-key="heroTitle">Welcome to the Muslim Student Jema'a Portal</h2>
                 <p data-i18n-key="heroSubtitle">Your hub for prayer times, community events, Islamic learning, and student engagement.</p>
                 <div class="hero-buttons">
                     <button class="btn btn-primary-large" onclick="navigateTo('signup')" data-i18n-key="heroBtnJoin">Join the Jemea</button>
@@ -157,10 +157,23 @@
 
         <!-- SECTION: ABOUT (Mission/Vision/Objectives) -->
         <section id="about" class="hidden-section">
-            <div class="card content-card">
-                <h2 id="about-title">About Us</h2>
-                <div id="about-content">
-                    <!-- Populated by JS -->
+            <h2 class="section-title" data-i18n-key="aboutTitle">About Us</h2>
+            <div class="card content-card about-container">
+                <div class="about-tabs">
+                    <button id="tab-mission" class="about-tab active" onclick="showAboutTab('mission')" data-i18n-key="aboutTabMission">Mission</button>
+                    <button id="tab-vision" class="about-tab" onclick="showAboutTab('vision')" data-i18n-key="aboutTabVision">Vision</button>
+                    <button id="tab-objectives" class="about-tab" onclick="showAboutTab('objectives')" data-i18n-key="aboutTabObjectives">Objectives</button>
+                </div>
+                <div class="about-content-wrapper">
+                    <div id="content-mission" class="about-content active">
+                        <p data-i18n-key="aboutMissionText"></p>
+                    </div>
+                    <div id="content-vision" class="about-content">
+                        <p data-i18n-key="aboutVisionText"></p>
+                    </div>
+                    <div id="content-objectives" class="about-content">
+                        <ul data-i18n-key="aboutObjectivesList"></ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -388,6 +401,16 @@
             <div class="footer-col">
                 <h3>Muslim Student Jama'a</h3>
                 <p>Serving the students, strengthening the Ummah.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+                    <a href="#" onclick="navigateTo('contact')" aria-label="Contact Us"><i data-lucide="mail"></i></a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
