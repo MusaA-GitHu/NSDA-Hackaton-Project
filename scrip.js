@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // --- DATA CONSTANTS ---
 
 const ETHIOPIAN_UNIVERSITIES = [
@@ -612,6 +612,7 @@ const translations = {
     window.setAzkarTab = setAzkarTab;
     window.showModal = showModal; // New exposed function
 
+
 })(); // End of self-executing function
 =======
 // --- DATA CONSTANTS ---
@@ -1192,4 +1193,4 @@ const translations = {
     window.loadPdf = loadPdf;
 
 })();
->>>>>>> master
+
