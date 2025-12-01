@@ -589,7 +589,6 @@ const translations = {
         if (signupForm) {
             signupForm.addEventListener('submit', handleSignupSubmit);
         }
-0
         
         // Set language from local storage or default to 'en'
         const userLang = localStorage.getItem('userLanguage') || 'en';
