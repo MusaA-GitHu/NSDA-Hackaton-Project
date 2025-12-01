@@ -1,3 +1,4 @@
+console.log()
 
 // --- DATA CONSTANTS ---
 
@@ -25,6 +26,15 @@ const AZKAR_LIST = [
     { text: "Surah Al-Ikhlas (3x)", count: 3, type: 'evening' },
 ];
 
+// Sample Upcoming Events Data
+const UPCOMING_EVENTS = [
+    { id: 1, title: "Weekly Halaqat: Tafsir of Surah Al-Baqarah", date: "2025-12-05", time: "6:00 PM", location: "Main Hall, Addis Ababa University", description: "Join us for our weekly halaqat where we discuss the meanings and lessons from Surah Al-Baqarah.", image: "images/real/study/study2.jpg" },
+    { id: 2, title: "Islamic Finance Workshop", date: "2025-12-08", time: "2:00 PM", location: "Conference Room, Haramaya University", description: "Learn about Islamic banking principles and ethical finance practices.", image: "images/real/events/event-bg.jpg" },
+    { id: 3, title: "Community Iftar Gathering", date: "2025-12-12", time: "5:30 PM", location: "University Mosque Courtyard", description: "Break your fast with fellow students and community members during this special iftar gathering.", image: "images/real/events/iftar1.jpg" },
+    { id: 4, title: "Youth Leadership Summit", date: "2025-12-15", time: "9:00 AM", location: "Student Center, Bahir Dar University", description: "A leadership development program focusing on Islamic values and community service.", image: "images/real/community/community2.jpg" },
+    { id: 5, title: "Arabic Language Circle", date: "2025-12-18", time: "4:00 PM", location: "Library Study Room 3", description: "Practice conversational Arabic with fellow students in a relaxed, supportive environment.", image: "images/real/study/study1.jpg" }
+];
+
 // UPDATED: New structure uses 'category' for main filter and 'subCategory' for detail
 const BOOKS = [
     // SHARIA CATEGORY
@@ -32,7 +42,7 @@ const BOOKS = [
     { id: 2, title: "Riyad as-Salihin", category: "Sharia", subCategory: "Hadith", lang: "English", url: "https://ia803100.us.archive.org/10/items/riyad-us-saliheen-dar-us-salam-saudi-arabia/Riyad-us-Saliheen-Dar-us-Salam-Saudi-Arabia.pdf", color: "#dbeafe" },
     { id: 3, title: "Tafsiira Quraanaa", category: "Sharia", subCategory: "Tafsir", lang: "Afaan Oromo", url: "https://ia802908.us.archive.org/21/items/tafsiira-quraanaa-afaan-oromootiin/Tafsiira%20Quraanaa%20Afaan%20Oromootiin.pdf", color: "#ffedd5" },
     { id: 4, title: "Ar Raheeq Al Makhtum", category: "Sharia", subCategory: "Seerah", lang: "English", url: "https://ia801902.us.archive.org/14/items/the-sealed-nectar-ar-raheeq-al-makhtum/The-Sealed-Nectar-Ar-Raheeq-Al-Makhtum.pdf", color: "#dcfce7" },
-    { id: 5, title: "Fiqh As-Sunnah", category: "Sharia", subCategory: "Fiqh", lang: "Arabic", url: "https://ia802300.us.archive.org/2/items/FP11023/11023.pdf", color: "#fef9c3" },
+    { id: 5, title: "Fiqh As-Sunnah", category: "Sharia", subCategory: "Fiqh", lang: "Arabic", url: "https://ia802300.us.archive.org/21/items/FP11023/11023.pdf", color: "#fef9c3" },
     { id: 10, title: "Amharic Fiqh Notes", category: "Sharia", subCategory: "Fiqh", lang: "Amharic", url: "https://ia902900.us.archive.org/21/items/amharic-fiqh-book-1/Amharic%20Fiqh%20Book%201.pdf", color: "#ffe4e6" },
     
     // ACADEMIC CATEGORY
@@ -106,7 +116,7 @@ const translations = {
         navAbout: "حول",
         navLibrary: "المكتبة",
         navHalaqat: "الحلقات",
-        navEvents: "الفعاليات",
+        navEvents: "الفاعاليات",
         navSectors: "انضم للقطاعات",
         navSignIn: "تسجيل الدخول",
         navSignUp: "تسجيل جديد",
@@ -114,8 +124,8 @@ const translations = {
         heroSubtitle: "البوابة الرسمية للطلاب المسلمين الإثيوبيين. انضم إلى حلقات العلم، وشارك في الأعمال الخيرية، وتواصل مع مجتمعك.",
         heroBtnJoin: "انضم إلى الجمعية",
         heroBtnEvents: "شاهد الفعاليات القادمة",
-        upcomingEvents: "الفعاليات والإعلانات القادمة",
-        eventsPlaceholder: "سيتم تنفيذแถบ تمرير الأحداث المميزة هنا.",
+        upcomingEvents: "الفاعاليات والإعلانات القادمة",
+        eventsPlaceholder: "سيتم تنفيذ.ToolStripItem تمرير الأحداث المميزة هنا.",
         explorePortal: "استكشف بوابتنا",
         prayerTimes: "أوقات الصلاة",
         dailyAzkar: "الأذكار اليومية",
@@ -131,15 +141,15 @@ const translations = {
         navEvents: "ክስተቶች",
         navSectors: "ክፍልን ይቀላቀሉ",
         navSignIn: "ግባ",
-        navSignUp: "ይመዝገቡ",
-        heroTitle: "ዕውቀትን ፈልጉ፣ ሰብአዊነትን አገልግሉ",
-        heroSubtitle: "የኢትዮጵያ ሙስሊም ተማሪዎች ይፋዊ መግቢያ። የእውቀት κύκሎችን ይቀላቀሉ፣ በበጎ አድራጎት ይሳተፉ እና ከማህበረሰብዎ ጋር ይገናኙ።",
+        navSignUp: "ይመዝገibu",
+        heroTitle: "ዕውቀትን ፈልጉ፣ ሰብአawiነትን አገልግሉ",
+        heroSubtitle: "የኢትዮጵያ ሙስሊム ተማሪዎች ይፋዊ መግቢያ። የእውቀት κύκሎችን ይቀላቀሉ፣ በበጎ አድራጎት ይሳተፉ እና ከማህበረሰብዎ ጋር ይገናኙ።",
         heroBtnJoin: "ጀመዓውን ይቀላቀሉ",
         heroBtnEvents: "መጪ ክስተቶችን ይመልከቱ",
         upcomingEvents: "መጪ ክስተቶች እና ማስታወቂያዎች",
         eventsPlaceholder: "ተለይተው የቀረቡ የክስተቶች ተንሸራታች እዚህ ይተገበራል።",
         explorePortal: "ገፆቻችንን ያስሱ",
-        prayerTimes: "የጸሎት ጊዜያት",
+        prayerTimes: "የ铮ሎት ጊዜያት",
         dailyAzkar: "ዕለታዊ አዝካር",
         azkarMorning: "Morning",
         azkarEvening: "Evening",
@@ -198,9 +208,23 @@ const translations = {
         // Close sidebar if open
         document.getElementById('mobile-menu').classList.add('hidden');
         
+        // Hide mobile events submenu
+        const mobileEventsSubmenu = document.getElementById('mobile-events-submenu');
+        if (mobileEventsSubmenu) {
+            mobileEventsSubmenu.style.display = 'none';
+        }
+        
         // Refresh icons (sometimes needed when unhiding)
         lucide.createIcons();
         window.scrollTo(0,0);
+    }
+
+    // Function to toggle mobile events submenu
+    function toggleMobileEventsSubmenu() {
+        const submenu = document.getElementById('mobile-events-submenu');
+        if (submenu) {
+            submenu.style.display = submenu.style.display === 'none' ? 'block' : 'none';
+        }
     }
 
     function toggleMobileMenu() {
@@ -275,7 +299,7 @@ const translations = {
         if (currentCount < targetCount) {
             currentCount++;
             azkarState[zikrId] = currentCount;
-            countElement.textContent = `${currentCount} / ${targetCount}`;
+            countElement.textContent = `${currentCount} / ${zikr.count}`;
             
             // Add completion class
             if (currentCount === targetCount) {
@@ -478,7 +502,7 @@ const translations = {
 
         container.innerHTML = filtered.map(book => `
             <div class="book-card">
-                <div class="book-cover" style="background-color: ${book.color || 'var(--color-border)'}; cursor:pointer;" 
+                <div class="book-cover" style="background-color: ${book.color || 'var(--color-border)'}; cursor:pointer;"
                      onclick="window.open('${book.url}', '_blank')"
                      onkeydown="handleKeydown(event, () => window.open('${book.url}', '_blank'))">
                     <i data-lucide="book-open" size="48"></i>
@@ -515,41 +539,74 @@ const translations = {
     // --- ABOUT CONTENT ---
 
     function loadAboutContent(type) {
-        const title = document.getElementById('about-title');
-        const content = document.getElementById('about-content');
-        
         if(type === 'mission') {
-            title.innerText = "Our Mission";
-            content.innerHTML = "<p>The Muslim Student Jama’a Portal is dedicated to nurturing a united, spiritually grounded community of Muslim students across Ethiopian campuses. Our mission is to empower students intellectually, socially, and spiritually by providing authentic Islamic resources, meaningful study circles, and opportunities for service. We offer access to Qur’an and Hadith study, halaqat, and community outreach, while promoting academic excellence and Islamic values.</p>";
+            const missionContent = document.querySelector('#content-mission');
+            if (missionContent) {
+                missionContent.innerHTML = `
+                <div class="about-image-container">
+                    <img src="images/real/community/community1.jpg" alt="Community gathering" class="about-image" onerror="this.style.display='none'">
+                </div>
+                <p>The Muslim Student Jama’a Portal is dedicated to nurturing a united, spiritually grounded community of Muslim students across Ethiopian campuses. Our mission is to empower students intellectually, socially, and spiritually by providing authentic Islamic resources, meaningful study circles, and opportunities for service. We offer access to Qur’an and Hadith study, halaqat, and community outreach, while promoting academic excellence and Islamic values.</p>`;
+            }
         } else if (type === 'vision') {
-            title.innerText = "Our Vision";
-            content.innerHTML = "<p>We envision a future in which Muslim students in Ethiopia are deeply rooted in their faith, confident in their identity, and equipped to serve as compassionate and principled leaders. Through this portal, we aim to inspire a generation that balances Islamic knowledge with academic achievement, builds strong bonds across campuses, and contributes positively to society in line with Islamic ethics.</p>";
+            const visionContent = document.querySelector('#content-vision');
+            if (visionContent) {
+                visionContent.innerHTML = `
+                <div class="about-image-container">
+                    <img src="images/real/events/event-bg.jpg" alt="Future vision" class="about-image" onerror="this.style.display='none'">
+                </div>
+                <p>We envision a future in which Muslim students in Ethiopia are deeply rooted in their faith, confident in their identity, and equipped to serve as compassionate and principled leaders. Through this portal, we aim to inspire a generation that balances Islamic knowledge with academic achievement, builds strong bonds across campuses, and contributes positively to society in line with Islamic ethics.</p>`;
+            }
         } else {
-            title.innerText = "Our Objectives";
-            content.innerHTML = `
-            <h3>Promote Da’wah and Spiritual Development</h3>
-            <ul>
-                <li>Facilitate halaqat (study circles) on Qur’an, Tafsir, Fiqh, and other Islamic sciences.</li>
-                <li>Encourage peer-led learning, mentorship, and outreach.</li>
-            </ul>
-            <h3>Support Academic Growth</h3>
-            <ul>
-                <li>Provide resources and peer networks to help students integrate faith and scholarship.</li>
-                <li>Encourage mentoring, study groups, and academic projects rooted in Islamic values.</li>
-            </ul>
-            <h3>Deliver Islamic Education</h3>
-            <ul>
-                <li>Create a digital Library containing Qur’an, Hadith, Tafsir, and Sirah in multiple languages (Afaan Oromo, Amharic, English, Arabic).</li>
-                <li>Develop structured learning opportunities (halaqat, lecture series, study materials).</li>
-            </ul>
-            <h3>Strengthen Community Engagement</h3>
-            <ul>
-                <li>Build a safe, inclusive space for students to connect, share, and grow together.</li>
-                <li>Organize events, discussions, and collaborative activities to enhance social unity.</li>
-            </ul>`;
+            const objectivesContent = document.querySelector('#content-objectives');
+            if (objectivesContent) {
+                objectivesContent.innerHTML = `
+                <div class="about-image-container">
+                    <img src="images/real/study/study1.jpg" alt="Study session" class="about-image" onerror="this.style.display='none'">
+                </div>
+                <ul>
+                <li><strong>Promote Da’wah and Spiritual Development:</strong> Facilitate halaqat (study circles) on Qur’an, Tafsir, Fiqh, and other Islamic sciences. Encourage peer-led learning, mentorship, and outreach.</li>
+                <li><strong>Support Academic Growth:</strong> Provide resources and peer networks to help students integrate faith and scholarship. Encourage mentoring, study groups, and academic projects rooted in Islamic values.</li>
+                <li><strong>Deliver Islamic Education:</strong> Create a digital Library containing Qur’an, Hadith, Tafsir, and Sirah in multiple languages (Afaan Oromo, Amharic, English, Arabic). Develop structured learning opportunities (halaqat, lecture series, study materials).</li>
+                <li><strong>Strengthen Community Engagement:</strong> Build a safe, inclusive space for students to connect, share, and grow together. Organize events, discussions, and collaborative activities to enhance social unity.</li>
+                </ul>`;
+            }
         }
+        
+        // Refresh icons after content update
+        lucide.createIcons();
     }
-
+    
+    // Function to handle about section tab switching
+    function showAboutTab(tabName) {
+        // Hide all content sections
+        const contentSections = document.querySelectorAll('.about-content');
+        contentSections.forEach(section => {
+            section.classList.remove('active');
+        });
+        
+        // Show the selected content section
+        const targetContent = document.getElementById(`content-${tabName}`);
+        if (targetContent) {
+            targetContent.classList.add('active');
+        }
+        
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll('.about-tab');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        // Add active class to the clicked tab
+        const activeTab = document.getElementById(`tab-${tabName}`);
+        if (activeTab) {
+            activeTab.classList.add('active');
+        }
+        
+        // Load content for the selected tab
+        loadAboutContent(tabName);
+    }
+    
     // --- BANNER ROTATOR ---
     function initBannerRotator() {
         const quotes = document.querySelectorAll('.banner-quote');
@@ -569,36 +626,195 @@ const translations = {
         }, 7000); // Change quote every 7 seconds
     }
 
-    // --- INITIAL EXECUTION ---
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        // Initialize Icons
-        lucide.createIcons();
+    // --- UPCOMING EVENTS ---
+    function renderUpcomingEvents(containerId = 'events-slider-placeholder') {
+        const container = document.getElementById(containerId);
         
-        // Populate Initial Data
-        initBannerRotator(); // Start the banner
-        populateAzkar('morning'); // Default to morning
-        populatePrayerTimes();
-        populateUniversities();
-        renderLibrary(); // Initial render with 'All'
-        renderHalaqat();
-        renderSectors('male'); // Default to male sectors
+        if (!container) return;
         
-        // Attach form submission listener
-        const signupForm = document.getElementById('signup-form');
-        if (signupForm) {
-            signupForm.addEventListener('submit', handleSignupSubmit);
+        if (UPCOMING_EVENTS.length === 0) {
+            container.innerHTML = '<p>No upcoming events at this time. Please check back later.</p>';
+            return;
         }
         
-        // Set language from local storage or default to 'en'
-        const userLang = localStorage.getItem('userLanguage') || 'en';
-        document.getElementById('lang-select-nav').value = userLang;
-        setLanguage(userLang);
+        // Sort events by date
+        const sortedEvents = [...UPCOMING_EVENTS].sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+        container.innerHTML = `
+            <div class="events-slider">
+                ${sortedEvents.map(event => `
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="event-day">${new Date(event.date).getDate()}</div>
+                            <div class="event-month">${new Date(event.date).toLocaleString('default', { month: 'short' })}</div>
+                        </div>
+                        <div class="event-details">
+                            <h4>${event.title}</h4>
+                            <p class="event-time"><i data-lucide="clock"></i> ${event.time}</p>
+                            <p class="event-location"><i data-lucide="map-pin"></i> ${event.location}</p>
+                            <p class="event-description">${event.description}</p>
+                        </div>
+                        ${event.image ? `<div class="event-image">
+                            <img src="${event.image}" alt="${event.title}" onerror="this.style.display='none'">
+                        </div>` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        // Refresh icons
+        lucide.createIcons();
+    }
 
-        // Handle initial hash routing or default to home
-        navigateTo('home');
+    // --- EVENTS DROPDOWN ---
+    function renderEventsDropdown() {
+        const dropdown = document.getElementById('events-dropdown');
+        const mobileSubmenu = document.getElementById('mobile-events-submenu');
+        
+        if (!dropdown || !mobileSubmenu) return;
+        
+        // Get next 3 upcoming events
+        const sortedEvents = [...UPCOMING_EVENTS].sort((a, b) => new Date(a.date) - new Date(b.date));
+        const nextEvents = sortedEvents.slice(0, 3);
+        
+        if (nextEvents.length === 0) {
+            dropdown.innerHTML = '<a href="#" onclick="navigateTo(\'events\')">No upcoming events</a>';
+            mobileSubmenu.innerHTML = '<a href="#" onclick="navigateTo(\'events\')">No upcoming events</a>';
+            return;
+        }
+        
+        // Desktop dropdown
+        dropdown.innerHTML = nextEvents.map(event => `
+            <a href="#" onclick="navigateTo('events'); return false;">
+                <div style="padding: 8px 16px; border-bottom: 1px solid var(--color-border);">
+                    <div style="font-weight: 600; font-size: 14px;">${event.title}</div>
+                    <div style="font-size: 12px; color: var(--color-text-light); margin-top: 4px;">
+                        ${new Date(event.date).toLocaleDateString()} at ${event.time}
+                    </div>
+                </div>
+            </a>
+        `).join('') + `<a href="#" onclick="navigateTo('events')" style="text-align: center; padding: 8px; font-weight: 600; color: var(--color-primary);">View All Events</a>`;
+        
+        // Mobile submenu
+        mobileSubmenu.innerHTML = nextEvents.map(event => `
+            <a href="#" onclick="navigateTo('events'); return false;">
+                <div style="padding: 8px 0; font-size: 14px;">
+                    <div style="font-weight: 600;">${event.title}</div>
+                    <div style="font-size: 12px; color: var(--color-text-light); margin-top: 2px;">
+                        ${new Date(event.date).toLocaleDateString()} at ${event.time}
+                    </div>
+                </div>
+            </a>
+        `).join('');
+    }
+
+    // --- EVENTS SECTION ---
+    function renderEventsSection() {
+        // This function will populate the events section with upcoming events
+        const eventsSection = document.getElementById('events');
+        if (!eventsSection) return;
+        
+        // Create a container for upcoming events
+        const upcomingEventsContainer = document.createElement('div');
+        upcomingEventsContainer.className = 'card';
+        upcomingEventsContainer.innerHTML = `
+            <div class="card-header">
+                <h3>Upcoming Events</h3>
+            </div>
+            <div class="events-list">
+                ${UPCOMING_EVENTS.map(event => `
+                    <div class="event-item">
+                        <div class="event-item-date">
+                            <strong>${new Date(event.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</strong>
+                            <small>${event.time}</small>
+                        </div>
+                        <div class="event-item-details">
+                            <h4>${event.title}</h4>
+                            <p>${event.description}</p>
+                            <div class="event-meta">
+                                <span><i data-lucide="map-pin"></i> ${event.location}</span>
+                            </div>
+                            ${event.image ? `<div class="event-item-image">
+                                <img src="${event.image}" alt="${event.title}" onerror="this.style.display='none'">
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        // Insert after the prayer times card
+        const prayerCard = eventsSection.querySelector('.prayer-card');
+        if (prayerCard) {
+            prayerCard.after(upcomingEventsContainer);
+        } else {
+            eventsSection.appendChild(upcomingEventsContainer);
+        }
+        
+        // Refresh icons
+        lucide.createIcons();
+    }
+
+    // --- INITIAL EXECUTION ---
+    
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Icons
+    lucide.createIcons();
+    
+    // Populate Initial Data
+    initBannerRotator(); // Start the banner
+    populateAzkar('morning'); // Default to morning
+    populatePrayerTimes();
+    populateUniversities();
+    renderLibrary(); // Initial render with 'All'
+    renderHalaqat();
+    renderSectors('male'); // Default to male sectors
+    
+    // Render upcoming events in home section
+    renderUpcomingEvents('events-slider-placeholder');
+    
+    // Render events in events section
+    renderEventsSection();
+    
+    // Render events dropdown in navigation
+    renderEventsDropdown();
+    
+    // Attach form submission listener
+    const signupForm = document.getElementById('signup-form');
+    if (signupForm) {
+        signupForm.addEventListener('submit', handleSignupSubmit);
+    }
+    
+    // Set language from local storage or default to 'en'
+    const userLang = localStorage.getItem('userLanguage') || 'en';
+    document.getElementById('lang-select-nav').value = userLang;
+    setLanguage(userLang);
+
+    // Handle initial hash routing or default to home
+    navigateTo('home');
+});
+
+    // Function to handle map loading errors
+    function handleMapError() {
+        const mapFallback = document.getElementById('map-fallback');
+        if (mapFallback) {
+            mapFallback.style.display = 'block';
+        }
+    }
+    
+    // Initialize map error handling
+    function initMapHandling() {
+        const mapIframe = document.querySelector('.map-container iframe');
+        if (mapIframe) {
+            mapIframe.addEventListener('error', handleMapError);
+        }
+    }
+    
+    // Call initMapHandling when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        initMapHandling();
     });
-
+    
     // --- Expose functions to the global scope for inline HTML event handlers ---
     window.setLanguage = setLanguage;
     window.navigateTo = navigateTo;
@@ -611,7 +827,9 @@ const translations = {
     window.trackZikr = trackZikr; // New exposed function
     window.setAzkarTab = setAzkarTab;
     window.showModal = showModal; // New exposed function
-
+    window.toggleMobileEventsSubmenu = toggleMobileEventsSubmenu; // New exposed function
+    window.showAboutTab = showAboutTab; // Expose about tab function
+    window.handleMapError = handleMapError; // Expose map error function
 
 })(); // End of self-executing function
 
