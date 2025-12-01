@@ -138,7 +138,11 @@ const translations = {
         heroBtnEvents: "መጪ ክስተቶችን ይመልከቱ",
         upcomingEvents: "መጪ ክስተቶች እና ማስታወቂያዎች",
         eventsPlaceholder: "ተለይተው የቀረቡ የክስተቶች ተንሸራታች እዚህ ይተገበራል።",
+<<<<<<< HEAD
         explorePortal: "порталаችንን ያስሱ",
+=======
+        explorePortal: "ገፆቻችንን ያስሱ",
+>>>>>>> 2b6207978c600ca9358dc65c6f866ace65a1f7f6
         prayerTimes: "የጸሎት ጊዜያት",
         dailyAzkar: "ዕለታዊ አዝካር",
         azkarMorning: "Morning",
@@ -614,6 +618,7 @@ const translations = {
 
 
 })(); // End of self-executing function
+<<<<<<< HEAD
 =======
 // --- DATA CONSTANTS ---
 
@@ -1195,3 +1200,7 @@ const translations = {
 })();
 
 
+=======
+
+                                        
+>>>>>>> 2b6207978c600ca9358dc65c6f866ace65a1f7f6
