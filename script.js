@@ -138,7 +138,7 @@ const translations = {
         heroBtnEvents: "መጪ ክስተቶችን ይመልከቱ",
         upcomingEvents: "መጪ ክስተቶች እና ማስታወቂያዎች",
         eventsPlaceholder: "ተለይተው የቀረቡ የክስተቶች ተንሸራታች እዚህ ይተገበራል።",
-        explorePortal: "порталаችንን ያስሱ",
+        explorePortal: "ገፆቻችንን ያስሱ",
         prayerTimes: "የጸሎት ጊዜያት",
         dailyAzkar: "ዕለታዊ አዝካር",
         azkarMorning: "Morning",
