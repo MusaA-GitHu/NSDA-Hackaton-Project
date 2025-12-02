@@ -441,7 +441,7 @@ button, .btn {
 
 .mobile-nav {
     position: absolute; /* Position relative to header */
-    display: flex;
+    display: none; /* Hidden by default */
     flex-direction: column;
     background-color: var(--color-surface);
     border-top: 1px solid var(--color-border);
@@ -471,6 +471,12 @@ button, .btn {
 @media (min-width: 992px) {
     .mobile-menu-btn { display: none; }
     .desktop-nav { display: flex !important; } /* Ensure desktop nav shows on desktop */
+}
+
+/* Hide desktop nav on mobile and show mobile nav when toggled */
+@media (max-width: 991px) {
+    .desktop-nav { display: none !important; }
+    .mobile-nav:not(.hidden) { display: flex; }
 }
 
 /* --------------------
