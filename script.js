@@ -1,836 +1,808 @@
-console.log()
+// script.js
 
-// --- DATA CONSTANTS ---
+document.addEventListener("DOMContentLoaded", () => {
 
-const ETHIOPIAN_UNIVERSITIES = [
-    "Addis Ababa University", "Adama Science and Technology University", "Addis Ababa Science and Technology University",
-    "Jimma University", "Haramaya University", "University of Gondar", "Bahir Dar University", "Hawassa University",
-    "Mekelle University", "Arba Minch University", "Wollo University", "Wolkite University", "Ambo University",
-    "Jigjiga University", "Dire Dawa University", "Debre Berhan University", "Debre Markos University",
-    "Wachemo University", "Wolleso University", "Meda Walabu University", "Bule Hora University", "Axum University",
-    "Adigrat University", "Woldia University", "Samara University", "Mettu University", "Assosa University",
-    "Gambella University", "Raya University", "Oda Bultum University", "Werabe University", "Bonga University",
-    "Jinka University", "Kotebe University of Education", "Rift Valley University", "Unity University", "St. Mary's University"
-];
+  // ==============================
+  // Page Navigation
+  // ==============================
+  const navOverlay = document.querySelector('.nav-overlay');
+  const pages = document.querySelectorAll(".page");
+  const navLinks = document.querySelectorAll("[data-target]");
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
 
-const AZKAR_LIST = [
-    // Morning Azkar
-    { text: "Ayat al-Kursi", count: 1, type: 'morning' },
-    { text: "Surah Al-Ikhlas (3x)", count: 3, type: 'morning' },
-    { text: "Surah Al-Falaq (3x)", count: 3, type: 'morning' },
-    { text: "Surah An-Nas (3x)", count: 3, type: 'morning' },
-    { text: "Asbahna wa asbahal-mulk...", count: 1, type: 'morning' },
-    // Evening Azkar
-    { text: "Amsayna wa amsal-mulk...", count: 1, type: 'evening' },
-    { text: "Ayat al-Kursi", count: 1, type: 'evening' },
-    { text: "Surah Al-Ikhlas (3x)", count: 3, type: 'evening' },
-];
+  function showPage(targetId) {
+    pages.forEach(page => { page.classList.remove("active-page"); page.classList.add("hidden-page"); });
+    const targetPage = document.getElementById(targetId);
+    if (targetPage) { targetPage.classList.add("active-page"); targetPage.classList.remove("hidden-page"); }
+    if (mobileMenu) mobileMenu.classList.remove("is-open");
+    if (navOverlay) navOverlay.classList.remove("is-open");
+    if (mobileMenuBtn) mobileMenuBtn.setAttribute("aria-expanded", "false");
+    // Re-apply language translation every time a page is shown
+    setLanguage(localStorage.getItem('language') || 'en');
+  }
 
-// Sample Upcoming Events Data
-const UPCOMING_EVENTS = [
-    { id: 1, title: "Weekly Halaqat: Tafsir of Surah Al-Baqarah", date: "2025-12-05", time: "6:00 PM", location: "Main Hall, Addis Ababa University", description: "Join us for our weekly halaqat where we discuss the meanings and lessons from Surah Al-Baqarah.", image: "images/real/study/study2.jpg" },
-    { id: 2, title: "Islamic Finance Workshop", date: "2025-12-08", time: "2:00 PM", location: "Conference Room, Haramaya University", description: "Learn about Islamic banking principles and ethical finance practices.", image: "images/real/events/event-bg.jpg" },
-    { id: 3, title: "Community Iftar Gathering", date: "2025-12-12", time: "5:30 PM", location: "University Mosque Courtyard", description: "Break your fast with fellow students and community members during this special iftar gathering.", image: "images/real/events/iftar1.jpg" },
-    { id: 4, title: "Youth Leadership Summit", date: "2025-12-15", time: "9:00 AM", location: "Student Center, Bahir Dar University", description: "A leadership development program focusing on Islamic values and community service.", image: "images/real/community/community2.jpg" },
-    { id: 5, title: "Arabic Language Circle", date: "2025-12-18", time: "4:00 PM", location: "Library Study Room 3", description: "Practice conversational Arabic with fellow students in a relaxed, supportive environment.", image: "images/real/study/study1.jpg" }
-];
+  navLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = link.getAttribute("data-target");
+      showPage(target); // Allow navigation to all pages
+    });
+  });
 
-// UPDATED: New structure uses 'category' for main filter and 'subCategory' for detail
-const BOOKS = [
-    // SHARIA CATEGORY
-    { id: 1, title: "The Noble Quran", category: "Sharia", subCategory: "Quran", lang: "Arabic", url: "https://www.muslim-library.com/dl/books/ar0101.pdf", color: "#d1fae5" },
-    { id: 2, title: "Riyad as-Salihin", category: "Sharia", subCategory: "Hadith", lang: "English", url: "https://ia803100.us.archive.org/10/items/riyad-us-saliheen-dar-us-salam-saudi-arabia/Riyad-us-Saliheen-Dar-us-Salam-Saudi-Arabia.pdf", color: "#dbeafe" },
-    { id: 3, title: "Tafsiira Quraanaa", category: "Sharia", subCategory: "Tafsir", lang: "Afaan Oromo", url: "https://ia802908.us.archive.org/21/items/tafsiira-quraanaa-afaan-oromootiin/Tafsiira%20Quraanaa%20Afaan%20Oromootiin.pdf", color: "#ffedd5" },
-    { id: 4, title: "Ar Raheeq Al Makhtum", category: "Sharia", subCategory: "Seerah", lang: "English", url: "https://ia801902.us.archive.org/14/items/the-sealed-nectar-ar-raheeq-al-makhtum/The-Sealed-Nectar-Ar-Raheeq-Al-Makhtum.pdf", color: "#dcfce7" },
-    { id: 5, title: "Fiqh As-Sunnah", category: "Sharia", subCategory: "Fiqh", lang: "Arabic", url: "https://ia802300.us.archive.org/21/items/FP11023/11023.pdf", color: "#fef9c3" },
-    { id: 10, title: "Amharic Fiqh Notes", category: "Sharia", subCategory: "Fiqh", lang: "Amharic", url: "https://ia902900.us.archive.org/21/items/amharic-fiqh-book-1/Amharic%20Fiqh%20Book%201.pdf", color: "#ffe4e6" },
-    
-    // ACADEMIC CATEGORY
-    { id: 6, title: "Differential Equations Module", category: "Academic", subCategory: "Module", lang: "English", url: "https://ia802608.us.archive.org/19/items/differential-equations-for-engineers/Differential%20Equations%20for%20Engineers.pdf", color: "#f3e8ff" },
-    { id: 7, title: "CS Entrance Exam 2023", category: "Academic", subCategory: "Exam", lang: "English", url: "https://ia904700.us.archive.org/3/items/gate-cs-2023-question-paper-and-answer-key/GATE-CS-2023-Question-Paper-and-Answer-Key.pdf", color: "#f3f4f6" },
-    { id: 11, title: "Physics 101 PPT Slides", category: "Academic", subCategory: "PPT", lang: "English", url: "https://ia801309.us.archive.org/20/items/introduction-to-physics/Introduction%20to%20Physics.pdf", color: "#fae8ff" },
-    { id: 12, title: "Intro to Economics Reference", category: "Academic", subCategory: "Reference", lang: "English", url: "https://ia601404.us.archive.org/32/items/principles-of-economics-2e-86v2tqj/Principles%20of%20Economics-2e-86V2tqj.pdf", color: "#e0f2f1" },
-    
-    // GENERAL KNOWLEDGE CATEGORY
-    { id: 8, title: "Psychology of Learning", category: "General Knowledge", subCategory: "Psychology", lang: "English", url: "https://ia803004.us.archive.org/22/items/the-psychology-of-learning/The%20Psychology%20of%20Learning.pdf", color: "#fee2e2" },
-    { id: 9, title: "7 Habits Summary", category: "General Knowledge", subCategory: "Self Development", lang: "English", url: "https://ia601805.us.archive.org/2/items/the-7-habits-of-highly-effective-people-powerful-lessons-in-personal-change/The%207%20Habits%20of%20Highly%20Effective%20People%20-%20Powerful%20Lessons%20in%20Personal%20Change.pdf", color: "#fff0f5" },
-];
+  if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.contains("is-open");
+      mobileMenu.classList.toggle("is-open");
+      navOverlay?.classList.toggle("is-open");
+      mobileMenuBtn.setAttribute("aria-expanded", String(!isOpen));
+    });
+    navOverlay?.addEventListener('click', () => {
+        mobileMenu.classList.remove("is-open");
+        navOverlay.classList.remove("is-open");
+        mobileMenuBtn.setAttribute("aria-expanded", "false");
+    });
+  }
 
-const HALAQAT_SCHEDULE = [
-    { topic: "Tafsir (Afaan Oromo)", time: "After Maghrib", day: "Monday", sheikh: "Ustaz Ahmed" },
-    { topic: "Bulugh al-Maram", time: "After Isha", day: "Tuesday", sheikh: "Ustaz Mohammed" },
-    { topic: "Tafsir (Amharic)", time: "After Asr", day: "Wednesday", sheikh: "Ustaz Jemal" },
-    { topic: "Usul al-Fiqh", time: "Weekend Morning", day: "Saturday", sheikh: "Dr. Ibrahim" },
-    { topic: "Quran Correction", time: "Daily", day: "Everyday", sheikh: "Recitation Committee" }
-];
+  // ==============================
+  // Dark Mode Toggle
+  // ==============================
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  const htmlElement = document.documentElement;
 
-const SECTORS = [
-    { id: 'daawa', name: "Da'awa Sector", icon: 'mic' },
-    { id: 'academic', name: "Academic Sector", icon: 'book' },
-    { id: 'info', name: "Information Sector", icon: 'info' },
-    { id: 'charity', name: "Charity Sector", icon: 'heart' },
-    { id: 'social', name: "Social Sector", icon: 'users' },
-];
+  const applyTheme = (theme) => {
+    htmlElement.setAttribute('data-theme', theme);
+    darkModeToggle?.setAttribute('aria-pressed', theme === 'dark');
+    localStorage.setItem('theme', theme);
+  };
 
-const PRAYER_TIMES = [
-    { name: "Fajr", time: "05:12 AM" },
-    { name: "Dhuhr", time: "12:25 PM" },
-    { name: "Asr", time: "03:45 PM" },
-    { name: "Maghrib", time: "06:15 PM" },
-    { name: "Isha", time: "07:30 PM" },
-];
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+  applyTheme(initialTheme);
 
-// --- APP STATE (for Azkar counting) ---
-// Initialize state for tracking Azkar progress. Keys are zikr text, values are current count.
-const azkarState = {};
+  darkModeToggle?.addEventListener('click', () => {
+    const newTheme = htmlElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+  });
 
-// --- INITIALIZATION ---
-const translations = {
+  // ==============================
+  // Multi-language Support
+  // ==============================
+  const translations = {
     en: {
-        // Nav
-        navHome: "Home",
-        navAbout: "About",
-        navLibrary: "Library",
-        navHalaqat: "Halaqat",
-        navEvents: "Events",
-        navSectors: "Join Sectors",
-        navSignIn: "Sign In",
-        navSignUp: "Sign Up",
-        // Hero
-        heroTitle: "Seek Knowledge, Serve Humanity",
-        heroSubtitle: "The official portal for Ethiopian Muslim students. Join circles of knowledge, participate in charity, and connect with your community.",
-        heroBtnJoin: "Join the Jemea",
-        heroBtnEvents: "See Upcoming Events",
-        // Home Page
-        upcomingEvents: "Upcoming Events & Announcements",
-        eventsPlaceholder: "Featured events slider will be implemented here.",
-        explorePortal: "Explore Our Portal",
-        prayerTimes: "Prayer Times",
-        dailyAzkar: "Daily Azkar",
-        azkarMorning: "Morning",
-        azkarEvening: "Evening",
-        language: "Language",
+      nav_home: "Home",
+      nav_about: "About",
+      nav_library: "Library",
+      nav_halaqat: "Halaqat",
+      nav_events: "Events",
+      nav_sectors: "Sectors",
+      nav_join: "Join",
+      nav_login: "Login",
+      nav_prayer: "Prayer & Azkar",
+      nav_student_portal: "Student Portal",
+      nav_contact: "Contact",
+      logout: "Logout",
+      home_title: "Welcome to the Muslim Student Jema'a Portal",
+      home_subtitle: "Your hub for prayer times, community events, Islamic learning, and student engagement.",
+      home_join_button: "Join the Jema'a",
+      home_events_button: "See Upcoming Events",
     },
     ar: {
-        navHome: "الرئيسية",
-        navAbout: "حول",
-        navLibrary: "المكتبة",
-        navHalaqat: "الحلقات",
-        navEvents: "الفاعاليات",
-        navSectors: "انضم للقطاعات",
-        navSignIn: "تسجيل الدخول",
-        navSignUp: "تسجيل جديد",
-        heroTitle: "اطلب العلم، اخدم الإنسانية",
-        heroSubtitle: "البوابة الرسمية للطلاب المسلمين الإثيوبيين. انضم إلى حلقات العلم، وشارك في الأعمال الخيرية، وتواصل مع مجتمعك.",
-        heroBtnJoin: "انضم إلى الجمعية",
-        heroBtnEvents: "شاهد الفعاليات القادمة",
-        upcomingEvents: "الفاعاليات والإعلانات القادمة",
-        eventsPlaceholder: "سيتم تنفيذ.ToolStripItem تمرير الأحداث المميزة هنا.",
-        explorePortal: "استكشف بوابتنا",
-        prayerTimes: "أوقات الصلاة",
-        dailyAzkar: "الأذكار اليومية",
-        azkarMorning: "الصباح",
-        azkarEvening: "المساء",
-        language: "اللغة",
+      nav_home: "الرئيسية",
+      nav_about: "من نحن",
+      nav_library: "المكتبة",
+      nav_halaqat: "الحلقات",
+      nav_events: "الفعاليات",
+      nav_sectors: "القطاعات",
+      nav_join: "انضم",
+      nav_login: "دخول",
+      nav_prayer: "الصلاة والأذكار",
+      nav_student_portal: "بوابة الطالب",
+      nav_contact: "اتصل بنا",
+      logout: "خروج",
+      home_title: "مرحبا بكم في بوابة جماعة الطلاب المسلمين",
+      home_subtitle: "مركزك لأوقات الصلاة، فعاليات المجتمع، التعلم الإسلامي، ومشاركة الطلاب.",
+      home_join_button: "انضم للجماعة",
+      home_events_button: "شاهد الفعاليات القادمة",
     },
     am: {
-        navHome: "ዋና ገጽ",
-        navAbout: "ስለ እኛ",
-        navLibrary: "ห้องสมุด",
-        navHalaqat: "Halaqat",
-        navEvents: "ክስተቶች",
-        navSectors: "ክፍልን ይቀላቀሉ",
-        navSignIn: "ግባ",
-        navSignUp: "ይመዝገibu",
-        heroTitle: "ዕውቀትን ፈልጉ፣ ሰብአawiነትን አገልግሉ",
-        heroSubtitle: "የኢትዮጵያ ሙስሊム ተማሪዎች ይፋዊ መግቢያ። የእውቀት κύκሎችን ይቀላቀሉ፣ በበጎ አድራጎት ይሳተፉ እና ከማህበረሰብዎ ጋር ይገናኙ።",
-        heroBtnJoin: "ጀመዓውን ይቀላቀሉ",
-        heroBtnEvents: "መጪ ክስተቶችን ይመልከቱ",
-        upcomingEvents: "መጪ ክስተቶች እና ማስታወቂያዎች",
-        eventsPlaceholder: "ተለይተው የቀረቡ የክስተቶች ተንሸራታች እዚህ ይተገበራል።",
-        explorePortal: "ገፆቻችንን ያስሱ",
-        prayerTimes: "የ铮ሎት ጊዜያት",
-        dailyAzkar: "ዕለታዊ አዝካር",
-        azkarMorning: "Morning",
-        azkarEvening: "Evening",
-        language: "ቋንቋ",
+      nav_home: "ዋና ገጽ",
+      nav_about: "ስለ እኛ",
+      nav_library: "ቤተ-መጽሐፍት",
+      nav_halaqat: "ሀለቃዎች",
+      nav_events: "ክስተቶች",
+      nav_sectors: "ዘርፎች",
+      nav_join: "ይቀላቀሉ",
+      nav_login: "ይግቡ",
+      nav_prayer: "ሶላት እና አዝካር",
+      nav_student_portal: "የተማሪዎች መግቢያ",
+      nav_contact: "ያግኙን",
+      logout: "ውጣ",
+      home_title: "ወደ ሙስሊም ተማሪዎች ጀመዓ ፖርታል እንኳን በደህና መጡ",
+      home_subtitle: "የሶላት ጊዜ፣ የማህበረሰብ ዝግጅቶች፣ ኢስላማዊ ትምህርት እና የተማሪ ተሳትፎ ማዕከልዎ።",
+      home_join_button: "ጀመዓውን ይቀላቀሉ",
+      home_events_button: "መጪ ዝግጅቶችን ይመልከቱ",
     },
     om: {
-        navHome: "Fuullee",
-        navAbout: "Waa'ee",
-        navLibrary: "Mana Kitaabaa",
-        navHalaqat: "Halaqaat",
-        navEvents: "Tattaaffiiwwan",
-        navSectors: "Damee Itti Makami",
-        navSignIn: "Seeni",
-        navSignUp: "Galmaa'i",
-        heroTitle: "Beekumsa Barbaadaa, Uummata Tajaajilaa",
-        heroSubtitle: "Xaroon barattoota Muslimaa Itoophiyaa kan offiziyaala. Marsaa beekumsaa irratti hirmaadhaa, tola-ooltummaatti qooda fudhadhaa, fi hawaasa keessan waliin wal qunnamaa.",
-        heroBtnJoin: "Jemea'atti Makami",
-        heroBtnEvents: "Tattaaffiiwwan Dhufan Ilaali",
-        upcomingEvents: "Tattaaffiiwwan Dhufanii fi Beeksifoota",
-        eventsPlaceholder: "Slideriin tattaaffiiwwan filatamoo asitti ni hojjetama.",
-        explorePortal: "Xaroon keenya Sakatta'i",
-        prayerTimes: "Yeroo Salaataa",
-        dailyAzkar: "Azkaara Guyyaa",
-        azkarMorning: "Ganama",
-        azkarEvening: "Galagala",
-        language: "Afaan",
-    }
-};
+      nav_home: "Fuula Jalqabaa",
+      nav_about: "Waa'ee Keenya",
+      nav_library: "Mana Kitaabaa",
+      nav_halaqat: "Halaqaa",
+      nav_events: "Tattaaffiiwwan",
+      nav_sectors: "Dameewwan",
+      nav_join: "Dabalamaa",
+      nav_login: "Seeni",
+      nav_prayer: "Salaataa fi Azkaar",
+      nav_student_portal: "Gola Barattootaa",
+      nav_contact: "Nu Qunnamaa",
+      logout: "Bahi",
+      home_title: "Gara Gola Barattoota Muslimaa Jama'aatti Nagaan Dhuftan",
+      home_subtitle: "Handhuura keessan yeroo salaataa, sagantaalee hawaasaa, barumsa Islaamaa fi hirmaannaa barattootaaf.",
+      home_join_button: "Jama'aatti Dabalamaa",
+      home_events_button: "Tattaaffiiwwan Dhufan Ilaalaa",
+    },
+  };
 
-// Wrap functions in a self-executing anonymous function to prevent global scope pollution,
-// but explicitly attach required functions to the window object for inline HTML event handlers.
+  const languageSelect = document.getElementById('language-select');
 
-(function() {
-    
-    // --- NAVIGATION LOGIC ---
-    function navigateTo(sectionId) {
-        // Hide all sections
-        const sections = document.querySelectorAll('main > section');
-        sections.forEach(sec => {
-            sec.classList.remove('active-section');
-            sec.classList.add('hidden-section');
-        });
-
-        // Show target section
-        const target = document.getElementById(sectionId);
-        // Handle About sub-pages logic (Mission/Vision/Object)
-        if(sectionId === 'mission' || sectionId === 'vision' || sectionId === 'objectives') {
-            loadAboutContent(sectionId);
-            document.getElementById('about').classList.remove('hidden-section');
-            document.getElementById('about').classList.add('active-section');
-        } else if (target) {
-            target.classList.remove('hidden-section');
-            target.classList.add('active-section');
-        }
-
-        // Close sidebar if open
-        document.getElementById('mobile-menu').classList.add('hidden');
-        
-        // Hide mobile events submenu
-        const mobileEventsSubmenu = document.getElementById('mobile-events-submenu');
-        if (mobileEventsSubmenu) {
-            mobileEventsSubmenu.style.display = 'none';
-        }
-        
-        // Refresh icons (sometimes needed when unhiding)
-        lucide.createIcons();
-        window.scrollTo(0,0);
-    }
-
-    // Function to toggle mobile events submenu
-    function toggleMobileEventsSubmenu() {
-        const submenu = document.getElementById('mobile-events-submenu');
-        if (submenu) {
-            submenu.style.display = submenu.style.display === 'none' ? 'block' : 'none';
-        }
-    }
-
-    function toggleMobileMenu() {
-        const menu = document.getElementById('mobile-menu');
-        menu.classList.toggle('hidden');
-    }
-
-    // --- ACCESSIBILITY HELPERS ---
-    function handleKeydown(event, action) {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault(); // Prevent scrolling on spacebar
-            action();
-        }
-    }
-
-    // --- I18N & LANGUAGE SWITCHING ---
-    function setLanguage(lang) {
-        const html = document.documentElement;
-        html.lang = lang;
-        html.dir = lang === 'ar' ? 'rtl' : 'ltr';
-
-        const elements = document.querySelectorAll('[data-i18n-key]');
-        elements.forEach(el => {
-            const key = el.getAttribute('data-i18n-key');
-            if (translations[lang] && translations[lang][key]) {
-                el.textContent = translations[lang][key];
-            }
-        });
-
-        // Persist user's choice
-        localStorage.setItem('userLanguage', lang);
-
-        // Sync both language switchers
-        document.getElementById('lang-select-nav').value = lang;
-    }
-
-    // --- DATA POPULATION ---
-
-    function setAzkarTab(type) {
-        document.getElementById('azkar-tab-morning').classList.toggle('active', type === 'morning');
-        document.getElementById('azkar-tab-evening').classList.toggle('active', type === 'evening');
-        populateAzkar(type);
-    }
-
-    function populateAzkar(type = 'morning') {
-        const container = document.getElementById('azkar-container');
-        const filteredAzkar = AZKAR_LIST.filter(zikr => zikr.type === type);
-
-        if (filteredAzkar.length === 0) {
-            container.innerHTML = `<p class="empty-state-message">No Azkar for this time.</p>`;
-            return;
-        }
-
-        container.innerHTML = filteredAzkar.map((zikr, index) => {
-            // Initialize state for each zikr
-            const zikrId = `${zikr.text}-${zikr.type}`;
-            azkarState[zikrId] = azkarState[zikrId] || 0;
-
-            const targetCount = zikr.count > 1 ? `(${zikr.count}x)` : '';
-            return `
-                <div class="zikr-item" data-zikr-target="${zikr.count}" data-zikr-id="${index}" onclick="trackZikr('${zikrId}', ${zikr.count}, this)">
-                    ${zikr.text.replace(targetCount, '')}
-                    <span class="zikr-count">${azkarState[zikrId]} / ${zikr.count}</span>
-                </div>
-            `;
-        }).join('');
-    }
-    function trackZikr(zikrId, targetCount, itemElement) {
-        let currentCount = azkarState[zikrId] || 0;
-        const countElement = itemElement.querySelector('.zikr-count');
-
-        if (currentCount < targetCount) {
-            currentCount++;
-            azkarState[zikrId] = currentCount;
-            countElement.textContent = `${currentCount} / ${zikr.count}`;
-            
-            // Add completion class
-            if (currentCount === targetCount) {
-                itemElement.classList.add('completed');
-                countElement.textContent = 'Done!';
-            }
-        }
-    }
-
-    function populatePrayerTimes() {
-        const homeList = document.getElementById('home-prayer-list');
-        const eventsList = document.getElementById('events-prayer-list');
-        
-        const prayerHTML = PRAYER_TIMES.map(p => `<li><span>${p.name}</span> <span>${p.time}</span></li>`).join('');
-
-        if (homeList) {
-            homeList.innerHTML = prayerHTML;
-        }
-        if (eventsList) {
-            eventsList.innerHTML = prayerHTML;
-        }
-    }
-    function populateUniversities() {
-        const select = document.getElementById('uni-select');
-        ETHIOPIAN_UNIVERSITIES.forEach(uni => {
-            const option = document.createElement('option');
-            option.value = uni;
-            option.textContent = uni;
-            select.appendChild(option);
-        });
-    }
-
-    // --- FORM HANDLING ---
-
-    function setGender(gender) {
-        // Update Tabs
-        document.getElementById('tab-male').classList.toggle('active', gender === 'male');
-        document.getElementById('tab-female').classList.toggle('active', gender === 'female');
-        
-        // Update Alert Box
-        const alertBox = document.getElementById('gender-alert');
-        alertBox.className = `alert-box ${gender}`;
-        alertBox.textContent = `You are registering for the ${gender === 'male' ? "Brothers'" : "Sisters'"} Portal.`;
-        
-        // Update Input
-        document.getElementById('gender-input').value = gender === 'male' ? 'Male' : 'Female';
-    }
-
-    function toggleUniversityField() {
-        const level = document.getElementById('edu-level').value;
-        const uniContainer = document.getElementById('uni-dropdown-container');
-        if (level === 'University') {
-            uniContainer.style.display = 'block';
-        } else {
-            uniContainer.style.display = 'none';
-        }
-    }
-
-    // New: Handle Sign-up Form Submission
-    function handleSignupSubmit(event) {
-        event.preventDefault();
-        const form = document.getElementById('signup-form');
-        const submitButton = form.querySelector('button[type="submit"]');
-
-        // Simple validation check
-        const inputs = form.querySelectorAll('input, select');
-        let isValid = true;
-        inputs.forEach(input => {
-            if (input.type !== 'submit' && input.type !== 'button' && input.required && !input.value) {
-                isValid = false;
-            }
-        });
-
-        if (!isValid) {
-            // In a real app, this would show specific error messages.
-            console.error("Please fill out all required fields.");
-            showModal('Registration Failed', 'Please complete all required fields before submitting.', 'error');
-            return;
-        }
-
-        // Simulate form processing
-        submitButton.textContent = "Registering...";
-        submitButton.disabled = true;
-
-        setTimeout(() => {
-            submitButton.textContent = "Register Account";
-            submitButton.disabled = false;
-            
-            // Display success message using a modal
-            showModal('Registration Successful', 'Jazak Allahu Khair! Your registration is complete. You will receive an email confirmation soon.', 'success');
-            
-            // Optional: Reset form
-            form.reset();
-        }, 1500);
-    }
-    
-    // Helper function to show a custom modal (replacing alert())
-    function showModal(title, message, type) {
-        let modal = document.getElementById('custom-modal');
-        if (!modal) {
-            modal = document.createElement('div');
-            modal.id = 'custom-modal';
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 id="modal-title"></h3>
-                        <button class="close-btn" onclick="document.getElementById('custom-modal').classList.remove('active')">&times;</button>
-                    </div>
-                    <p id="modal-message"></p>
-                    <button class="btn btn-primary" onclick="document.getElementById('custom-modal').classList.remove('active')">Close</button>
-                </div>
-            `;
-            document.body.appendChild(modal);
-        }
-        
-        document.getElementById('modal-title').textContent = title;
-        document.getElementById('modal-message').textContent = message;
-        
-        // Apply type-specific styling via classes
-        const modalHeader = modal.querySelector('.modal-header');
-        modalHeader.classList.remove('success', 'error', 'info'); // Reset classes
-        if (type) {
-            modalHeader.classList.add(type);
-        }
-        modal.classList.add('active');
-    }
-
-    // --- SECTORS HANDLING ---
-
-    function setSectorTab(gender) {
-        // Update Tabs
-        document.getElementById('sector-tab-male').classList.toggle('active', gender === 'male');
-        document.getElementById('sector-tab-female').classList.toggle('active', gender === 'female');
-        
-        // Update Button Styles inside cards (re-render)
-        renderSectors(gender);
-    }
-
-    function renderSectors(gender) {
-        const container = document.getElementById('sectors-grid');
-        
-        container.innerHTML = SECTORS.map(s => `
-            <div class="sector-card ${gender}">
-                <div class="sector-icon">
-                    <i data-lucide="${s.icon}"></i>
-                </div>
-                <h3>${s.name}</h3>
-                <p style="color:#666; font-size:0.9rem; margin:10px 0;">Register to volunteer for the ${gender === 'male' ? 'Brothers' : 'Sisters'} team.</p>
-                <button class="btn btn-outline" onclick="showModal('Sector Application', 'You have expressed interest in the ${s.name}. We will contact you soon!', 'success')">Join Team</button>
-            </div>
-        `).join('');
-        lucide.createIcons();
-    }
-
-    // --- LIBRARY LOGIC ---
-
-    function filterLibrary() {
-        // Get filter values from the new IDs
-        const langFilter = document.getElementById('lib-lang').value;
-        const mainCatFilter = document.getElementById('lib-main-cat').value;
-
-        // Populate sub-category dropdown based on main category
-        const subCatSelect = document.getElementById('lib-sub-cat');
-        subCatSelect.innerHTML = '<option value="All">All Sub-Categories</option>'; // Reset
-
-        if (mainCatFilter !== 'All') {
-            const subCategories = [...new Set(BOOKS.filter(b => b.category === mainCatFilter).map(b => b.subCategory))];
-            subCategories.forEach(subCat => {
-                const option = document.createElement('option');
-                option.value = subCat;
-                option.textContent = subCat;
-                subCatSelect.appendChild(option);
-            });
-            subCatSelect.style.display = 'inline-block';
-        } else {
-            subCatSelect.style.display = 'none';
-        }
-
-        const subCatFilter = subCatSelect.value;
-        renderLibrary(langFilter, mainCatFilter, subCatFilter);
-    }
-
-    function renderLibrary(langFilter = 'All', mainCatFilter = 'All', subCatFilter = 'All') {
-        const container = document.getElementById('library-grid');
-        const subCatSelect = document.getElementById('lib-sub-cat');
-
-        // Show/hide sub-category dropdown
-        subCatSelect.style.display = mainCatFilter === 'All' ? 'none' : 'inline-block';
-        
-        const filtered = BOOKS.filter(book => 
-            (langFilter === 'All' || book.lang === langFilter) && 
-            (mainCatFilter === 'All' || book.category === mainCatFilter) &&
-            (subCatFilter === 'All' || book.subCategory === subCatFilter)
-        );
-
-        if(filtered.length === 0) {
-            container.innerHTML = '<p class="empty-state-message">No books found matching your filters.</p>';
-            return;
-        }
-
-        container.innerHTML = filtered.map(book => `
-            <div class="book-card">
-                <div class="book-cover" style="background-color: ${book.color || 'var(--color-border)'}; cursor:pointer;"
-                     onclick="window.open('${book.url}', '_blank')"
-                     onkeydown="handleKeydown(event, () => window.open('${book.url}', '_blank'))">
-                    <i data-lucide="book-open" size="48"></i>
-                </div>
-                <div class="book-info">
-                    <!-- Display main category and subcategory for context -->
-                    <div class="book-cat">${book.category} (${book.subCategory})</div>
-                    <h3>${book.title}</h3>
-                    <div class="book-meta">
-                        <small>${book.lang}</small>
-                        <button class="btn btn-small" onclick="window.open('${book.url}', '_blank')">Open Online</button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-        lucide.createIcons();
-    }
-
-    // --- HALAQAT ---
-
-    function renderHalaqat() {
-        const tbody = document.getElementById('halaqat-body');
-        tbody.innerHTML = HALAQAT_SCHEDULE.map(item => `
-            <tr>
-                <td><strong>${item.topic}</strong></td>
-                <td class="halaqa-day">${item.day}</td>
-                <td>${item.time}</td>
-                <td>${item.sheikh}</td>
-                <td><button class="btn btn-small" onclick="showModal('Halaqa Enrollment', 'You have expressed interest in the Halaqa: ${item.topic}.', 'success')">Join</button></td>
-            </tr>
-        `).join('');
-    }
-
-    // --- ABOUT CONTENT ---
-
-    function loadAboutContent(type) {
-        if(type === 'mission') {
-            const missionContent = document.querySelector('#content-mission');
-            if (missionContent) {
-                missionContent.innerHTML = `
-                <div class="about-image-container">
-                    <img src="images/real/community/community1.jpg" alt="Community gathering" class="about-image" onerror="this.style.display='none'">
-                </div>
-                <p>The Muslim Student Jama’a Portal is dedicated to nurturing a united, spiritually grounded community of Muslim students across Ethiopian campuses. Our mission is to empower students intellectually, socially, and spiritually by providing authentic Islamic resources, meaningful study circles, and opportunities for service. We offer access to Qur’an and Hadith study, halaqat, and community outreach, while promoting academic excellence and Islamic values.</p>`;
-            }
-        } else if (type === 'vision') {
-            const visionContent = document.querySelector('#content-vision');
-            if (visionContent) {
-                visionContent.innerHTML = `
-                <div class="about-image-container">
-                    <img src="images/real/events/event-bg.jpg" alt="Future vision" class="about-image" onerror="this.style.display='none'">
-                </div>
-                <p>We envision a future in which Muslim students in Ethiopia are deeply rooted in their faith, confident in their identity, and equipped to serve as compassionate and principled leaders. Through this portal, we aim to inspire a generation that balances Islamic knowledge with academic achievement, builds strong bonds across campuses, and contributes positively to society in line with Islamic ethics.</p>`;
-            }
-        } else {
-            const objectivesContent = document.querySelector('#content-objectives');
-            if (objectivesContent) {
-                objectivesContent.innerHTML = `
-                <div class="about-image-container">
-                    <img src="images/real/study/study1.jpg" alt="Study session" class="about-image" onerror="this.style.display='none'">
-                </div>
-                <ul>
-                <li><strong>Promote Da’wah and Spiritual Development:</strong> Facilitate halaqat (study circles) on Qur’an, Tafsir, Fiqh, and other Islamic sciences. Encourage peer-led learning, mentorship, and outreach.</li>
-                <li><strong>Support Academic Growth:</strong> Provide resources and peer networks to help students integrate faith and scholarship. Encourage mentoring, study groups, and academic projects rooted in Islamic values.</li>
-                <li><strong>Deliver Islamic Education:</strong> Create a digital Library containing Qur’an, Hadith, Tafsir, and Sirah in multiple languages (Afaan Oromo, Amharic, English, Arabic). Develop structured learning opportunities (halaqat, lecture series, study materials).</li>
-                <li><strong>Strengthen Community Engagement:</strong> Build a safe, inclusive space for students to connect, share, and grow together. Organize events, discussions, and collaborative activities to enhance social unity.</li>
-                </ul>`;
-            }
-        }
-        
-        // Refresh icons after content update
-        lucide.createIcons();
-    }
-    
-    // Function to handle about section tab switching
-    function showAboutTab(tabName) {
-        // Hide all content sections
-        const contentSections = document.querySelectorAll('.about-content');
-        contentSections.forEach(section => {
-            section.classList.remove('active');
-        });
-        
-        // Show the selected content section
-        const targetContent = document.getElementById(`content-${tabName}`);
-        if (targetContent) {
-            targetContent.classList.add('active');
-        }
-        
-        // Remove active class from all tabs
-        const tabs = document.querySelectorAll('.about-tab');
-        tabs.forEach(tab => {
-            tab.classList.remove('active');
-        });
-        
-        // Add active class to the clicked tab
-        const activeTab = document.getElementById(`tab-${tabName}`);
-        if (activeTab) {
-            activeTab.classList.add('active');
-        }
-        
-        // Load content for the selected tab
-        loadAboutContent(tabName);
-    }
-    
-    // --- BANNER ROTATOR ---
-    function initBannerRotator() {
-        const quotes = document.querySelectorAll('.banner-quote');
-        if (quotes.length === 0) return;
-
-        let currentQuoteIndex = 0;
-
-        setInterval(() => {
-            // Remove active class from current quote
-            quotes[currentQuoteIndex].classList.remove('active');
-
-            // Get next quote index
-            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-
-            // Add active class to next quote
-            quotes[currentQuoteIndex].classList.add('active');
-        }, 7000); // Change quote every 7 seconds
-    }
-
-    // --- UPCOMING EVENTS ---
-    function renderUpcomingEvents(containerId = 'events-slider-placeholder') {
-        const container = document.getElementById(containerId);
-        
-        if (!container) return;
-        
-        if (UPCOMING_EVENTS.length === 0) {
-            container.innerHTML = '<p>No upcoming events at this time. Please check back later.</p>';
-            return;
-        }
-        
-        // Sort events by date
-        const sortedEvents = [...UPCOMING_EVENTS].sort((a, b) => new Date(a.date) - new Date(b.date));
-        
-        container.innerHTML = `
-            <div class="events-slider">
-                ${sortedEvents.map(event => `
-                    <div class="event-card">
-                        <div class="event-date">
-                            <div class="event-day">${new Date(event.date).getDate()}</div>
-                            <div class="event-month">${new Date(event.date).toLocaleString('default', { month: 'short' })}</div>
-                        </div>
-                        <div class="event-details">
-                            <h4>${event.title}</h4>
-                            <p class="event-time"><i data-lucide="clock"></i> ${event.time}</p>
-                            <p class="event-location"><i data-lucide="map-pin"></i> ${event.location}</p>
-                            <p class="event-description">${event.description}</p>
-                        </div>
-                        ${event.image ? `<div class="event-image">
-                            <img src="${event.image}" alt="${event.title}" onerror="this.style.display='none'">
-                        </div>` : ''}
-                    </div>
-                `).join('')}
-            </div>
-        `;
-        
-        // Refresh icons
-        lucide.createIcons();
-    }
-
-    // --- EVENTS DROPDOWN ---
-    function renderEventsDropdown() {
-        const dropdown = document.getElementById('events-dropdown');
-        const mobileSubmenu = document.getElementById('mobile-events-submenu');
-        
-        if (!dropdown || !mobileSubmenu) return;
-        
-        // Get next 3 upcoming events
-        const sortedEvents = [...UPCOMING_EVENTS].sort((a, b) => new Date(a.date) - new Date(b.date));
-        const nextEvents = sortedEvents.slice(0, 3);
-        
-        if (nextEvents.length === 0) {
-            dropdown.innerHTML = '<a href="#" onclick="navigateTo(\'events\')">No upcoming events</a>';
-            mobileSubmenu.innerHTML = '<a href="#" onclick="navigateTo(\'events\')">No upcoming events</a>';
-            return;
-        }
-        
-        // Desktop dropdown
-        dropdown.innerHTML = nextEvents.map(event => `
-            <a href="#" onclick="navigateTo('events'); return false;">
-                <div style="padding: 8px 16px; border-bottom: 1px solid var(--color-border);">
-                    <div style="font-weight: 600; font-size: 14px;">${event.title}</div>
-                    <div style="font-size: 12px; color: var(--color-text-light); margin-top: 4px;">
-                        ${new Date(event.date).toLocaleDateString()} at ${event.time}
-                    </div>
-                </div>
-            </a>
-        `).join('') + `<a href="#" onclick="navigateTo('events')" style="text-align: center; padding: 8px; font-weight: 600; color: var(--color-primary);">View All Events</a>`;
-        
-        // Mobile submenu
-        mobileSubmenu.innerHTML = nextEvents.map(event => `
-            <a href="#" onclick="navigateTo('events'); return false;">
-                <div style="padding: 8px 0; font-size: 14px;">
-                    <div style="font-weight: 600;">${event.title}</div>
-                    <div style="font-size: 12px; color: var(--color-text-light); margin-top: 2px;">
-                        ${new Date(event.date).toLocaleDateString()} at ${event.time}
-                    </div>
-                </div>
-            </a>
-        `).join('');
-    }
-
-    // --- EVENTS SECTION ---
-    function renderEventsSection() {
-        // This function will populate the events section with upcoming events
-        const eventsSection = document.getElementById('events');
-        if (!eventsSection) return;
-        
-        // Create a container for upcoming events
-        const upcomingEventsContainer = document.createElement('div');
-        upcomingEventsContainer.className = 'card';
-        upcomingEventsContainer.innerHTML = `
-            <div class="card-header">
-                <h3>Upcoming Events</h3>
-            </div>
-            <div class="events-list">
-                ${UPCOMING_EVENTS.map(event => `
-                    <div class="event-item">
-                        <div class="event-item-date">
-                            <strong>${new Date(event.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</strong>
-                            <small>${event.time}</small>
-                        </div>
-                        <div class="event-item-details">
-                            <h4>${event.title}</h4>
-                            <p>${event.description}</p>
-                            <div class="event-meta">
-                                <span><i data-lucide="map-pin"></i> ${event.location}</span>
-                            </div>
-                            ${event.image ? `<div class="event-item-image">
-                                <img src="${event.image}" alt="${event.title}" onerror="this.style.display='none'">
-                            </div>` : ''}
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-        
-        // Insert after the prayer times card
-        const prayerCard = eventsSection.querySelector('.prayer-card');
-        if (prayerCard) {
-            prayerCard.after(upcomingEventsContainer);
-        } else {
-            eventsSection.appendChild(upcomingEventsContainer);
-        }
-        
-        // Refresh icons
-        lucide.createIcons();
-    }
-
-    // --- INITIAL EXECUTION ---
-    
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Icons
-    lucide.createIcons();
-    
-    // Populate Initial Data
-    initBannerRotator(); // Start the banner
-    populateAzkar('morning'); // Default to morning
-    populatePrayerTimes();
-    populateUniversities();
-    renderLibrary(); // Initial render with 'All'
-    renderHalaqat();
-    renderSectors('male'); // Default to male sectors
-    
-    // Render upcoming events in home section
-    renderUpcomingEvents('events-slider-placeholder');
-    
-    // Render events in events section
-    renderEventsSection();
-    
-    // Render events dropdown in navigation
-    renderEventsDropdown();
-    
-    // Attach form submission listener
-    const signupForm = document.getElementById('signup-form');
-    if (signupForm) {
-        signupForm.addEventListener('submit', handleSignupSubmit);
-    }
-    
-    // Set language from local storage or default to 'en'
-    const userLang = localStorage.getItem('userLanguage') || 'en';
-    document.getElementById('lang-select-nav').value = userLang;
-    setLanguage(userLang);
-
-    // Handle initial hash routing or default to home
-    navigateTo('home');
-});
-
-    // Function to handle map loading errors
-    function handleMapError() {
-        const mapFallback = document.getElementById('map-fallback');
-        if (mapFallback) {
-            mapFallback.style.display = 'block';
-        }
-    }
-    
-    // Initialize map error handling
-    function initMapHandling() {
-        const mapIframe = document.querySelector('.map-container iframe');
-        if (mapIframe) {
-            mapIframe.addEventListener('error', handleMapError);
-        }
-    }
-    
-    // Call initMapHandling when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        initMapHandling();
+  function setLanguage(lang) {
+    if (!lang || !translations[lang]) lang = 'en'; // Fallback to English
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-lang-key]').forEach(el => {
+      const key = el.getAttribute('data-lang-key');
+      el.textContent = translations[lang]?.[key] || translations['en'][key];
     });
-    
-    // --- Expose functions to the global scope for inline HTML event handlers ---
-    window.setLanguage = setLanguage;
-    window.navigateTo = navigateTo;
-    window.toggleMobileMenu = toggleMobileMenu;
-    window.handleKeydown = handleKeydown; // Expose for accessibility
-    window.setGender = setGender;
-    window.toggleUniversityField = toggleUniversityField;
-    window.setSectorTab = setSectorTab;
-    window.filterLibrary = filterLibrary;
-    window.trackZikr = trackZikr; // New exposed function
-    window.setAzkarTab = setAzkarTab;
-    window.showModal = showModal; // New exposed function
-    window.toggleMobileEventsSubmenu = toggleMobileEventsSubmenu; // New exposed function
-    window.showAboutTab = showAboutTab; // Expose about tab function
-    window.handleMapError = handleMapError; // Expose map error function
+    localStorage.setItem('language', lang);
+  }
 
-})(); // End of self-executing function
+  languageSelect?.addEventListener('change', (e) => setLanguage(e.target.value));
 
-                                        
+  // Set initial language
+  const savedLang = localStorage.getItem('language') || 'en';
+  if (languageSelect) languageSelect.value = savedLang;
+  setLanguage(savedLang);
+
+  // ==============================
+  // Mock Login/Auth
+  // ==============================
+  const loginForm = document.getElementById("login-form");
+  const logoutBtn = document.getElementById("logout-btn");
+  const userActionsLoggedIn = document.getElementById("user-actions-logged-in");
+  const authLinks = document.querySelectorAll(".nav-auth-link");
+
+  function updateUIForLoginState(isLoggedIn) {
+    if (isLoggedIn) {
+      // User is logged in
+      userActionsLoggedIn.classList.remove("hidden");
+      authLinks.forEach(link => link.classList.add("hidden"));
+    } else {
+      // User is logged out
+      userActionsLoggedIn.classList.add("hidden");
+      authLinks.forEach(link => link.classList.remove("hidden"));
+    }
+  }
+
+  loginForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    // --- IMPORTANT ---
+    // This is a MOCK login. In a real application, you would send this
+    // to a server for secure authentication. Do NOT use this in production.
+    if (email === "student@msj.com" && password === "password123") {
+      alert("Login successful! Welcome.");
+      sessionStorage.setItem("isLoggedIn", "true"); // Use sessionStorage to keep user logged in for the session
+      updateUIForLoginState(true);
+      showPage("student"); // Redirect to student portal after login
+    } else {
+      alert("Invalid email or password. Please try again.");
+    }
+  });
+
+  logoutBtn?.addEventListener("click", () => {
+    sessionStorage.removeItem("isLoggedIn");
+    updateUIForLoginState(false);
+    showPage("home"); // Redirect to home page after logout
+    alert("You have been logged out.");
+  });
+
+  // Check login state on page load
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+  updateUIForLoginState(isLoggedIn);
+
+  // ==============================
+  // About Tabs
+  // ==============================
+  const aboutTabs = document.querySelectorAll(".about-tab");
+  const aboutContents = document.querySelectorAll(".about-content");
+  aboutTabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      aboutTabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      const targetId = tab.getAttribute("data-tab");
+      aboutContents.forEach(c => c.classList.add("hidden"));
+      document.getElementById(targetId)?.classList.remove("hidden");
+    });
+  });
+
+  // ==============================
+  // Signup Gender & University Fields
+  // ==============================
+  const genderTabs = document.querySelectorAll(".gender-tab");
+  const genderInput = document.getElementById("gender-input");
+  const universityFields = document.getElementById("university-fields");
+
+  genderTabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      genderTabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      const gender = tab.getAttribute("data-gender"); // 'male' or 'female'
+      if (genderInput) { // Add null check for genderInput
+        genderInput.value = gender === "male" ? "Male" : "Female";
+      }
+    });
+  });
+
+  const educationLevel = document.getElementById("education-level");
+  educationLevel?.addEventListener("change", (e) => {
+    if (e.target.value === "university") {
+      universityFields?.classList.remove("hidden");
+    } else {
+      universityFields?.classList.add("hidden");
+    }
+  });
+
+  const signupForm = document.getElementById("signup-form");
+  signupForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const password = e.target.password.value;
+    const confirmPassword = e.target.confirm_password.value;
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match. Please try again.");
+      return; // Stop the function
+    }
+
+    // In a real application, you would send this data to a server.
+    // For this mock-up, we'll just show a success message.
+    alert("Registration successful! This is a demo. Please log in using the test account: student@msj.com");
+
+    // Reset the form and redirect to the login page
+    signupForm.reset(); // Resetting the form
+    universityFields?.classList.add("hidden"); // Also hide the university fields, with null check
+    showPage('login');
+  });
+
+  // ==============================
+  // Library Books Data
+  // ==============================
+  let books = [
+    { title: "Quran", author: "Allah", language: "Arabic", description: "Holy Quran", link: "#" },
+    { title: "Hadith Collection", author: "Imam Bukhari", language: "Arabic", description: "Sahih Bukhari Hadiths", link: "#" },
+    { title: "Islamic History", author: "Martin Lings", language: "English", description: "Biography and history of Islam", link: "#" },
+    { title: "Fiqh Basics", author: "Oromo Scholar", language: "Oromic", description: "Fundamentals of Islamic law", link: "#" },
+    { title: "Amharic Islamic Guide", author: "Ethiopian Scholar", language: "Amharic", description: "Introduction to Islam", link: "#" },
+    { title: "Salah Guide", author: "Islamic Scholar", language: "English", description: "Prayer guide", link: "#" },
+    { title: "Arabic Grammar", author: "Al-Kitab", language: "Arabic", description: "Learn Arabic grammar", link: "#" },
+    { title: "Islamic Ethics", author: "Muslim Thinker", language: "English", description: "Manners and ethics in Islam", link: "#" },
+    { title: "Oromo Islamic Stories", author: "Oromo Author", language: "Oromic", description: "Stories and teachings", link: "#" },
+    { title: "Amharic Quran Translation", author: "Amharic Scholar", language: "Amharic", description: "Quran translation in Amharic", link: "#" },
+    // --- 50 New Books Below ---
+    { title: "The Sealed Nectar", author: "Safiu-Rahman Mubarakpuri", language: "English", description: "Biography of Prophet Muhammad (PBUH)", link: "#" },
+    { title: "Riyad-us Saliheen", author: "Imam An-Nawawi", language: "English", description: "Gardens of the Righteous - Hadith Collection", link: "#" },
+    { title: "Don't Be Sad", author: "Aaidh ibn Abdullah al-Qarni", language: "English", description: "Inspirational Islamic self-help book", link: "#" },
+    { title: "Towards Understanding Islam", author: "Abul A'la Maududi", language: "English", description: "Comprehensive introduction to Islam", link: "#" },
+    { title: "Islam and the Modern World", author: "Various", language: "English", description: "Essays on contemporary Islamic issues", link: "#" },
+    { title: "The Quran: A New Translation", author: "M.A.S. Abdel Haleem", language: "English", description: "Modern English translation of the Quran", link: "#" },
+    { title: "Al-Adab Al-Mufrad", author: "Imam Bukhari", language: "English", description: "Book on Islamic manners and morals", link: "#" },
+    { title: "Purification of the Heart", author: "Hamza Yusuf", language: "English", description: "Spiritual insights from Imam al-Mawlud's poem", link: "#" },
+    { title: "Inner Dimensions of Islamic Worship", author: "Imam Al-Ghazali", language: "English", description: "Understanding the spiritual aspects of worship", link: "#" },
+    { title: "The Productive Muslim", author: "Mohammed Faris", language: "English", description: "Practical guide to productivity in Islam", link: "#" },
+    { title: "Arabic for Beginners", author: "Various", language: "English", description: "Basic Arabic language learning", link: "#" },
+    { title: "Learn Arabic in 30 Days", author: "Arabic Language Institute", language: "English", description: "Quick guide to conversational Arabic", link: "#" },
+    { title: "Oromo Grammar Guide", author: "Oromo Linguist", language: "Oromic", description: "Comprehensive Oromo grammar rules", link: "#" },
+    { title: "Seenaa Islaamaa", author: "Oromo Historian", language: "Oromic", description: "Islamic history in Oromic", link: "#" },
+    { title: "Qur'aana Hiikkaa Afaan Oromoo", author: "Oromo Translators", language: "Oromic", description: "Quran translation in Oromic", link: "#" },
+    { title: "Amharic Fiqh", author: "Amharic Ulema", language: "Amharic", description: "Islamic jurisprudence in Amharic", link: "#" },
+    { title: "Hadisoch", author: "Amharic Scholar", language: "Amharic", description: "Collection of Hadith in Amharic", link: "#" },
+    { title: "Tarikh al-Islam", author: "Various", language: "Arabic", description: "Comprehensive Islamic History", link: "#" },
+    { title: "Fatawa Islamiyyah", author: "Various Scholars", language: "Arabic", description: "Collection of Islamic Rulings", link: "#" },
+    { title: "Tafsir Ibn Kathir", author: "Imam Ibn Kathir", language: "Arabic", description: "Exegesis of the Holy Quran", link: "#" },
+    { title: "Al-Muwatta", author: "Imam Malik", language: "Arabic", description: "Early Hadith and Fiqh compilation", link: "#" },
+    { title: "Kitab al-Umm", author: "Imam Shafi'i", language: "Arabic", description: "Foundational work of Shafi'i Fiqh", link: "#" },
+    { title: "Al-Risala", author: "Imam Shafi'i", language: "Arabic", description: "Treatise on the principles of Islamic jurisprudence", link: "#" },
+    { title: "Sahih Muslim", author: "Imam Muslim", language: "Arabic", description: "Authentic Hadith Collection", link: "#" },
+    { title: "Sunan Abu Dawud", author: "Imam Abu Dawud", language: "Arabic", description: "Hadith Collection focusing on legal traditions", link: "#" },
+    { title: "Jami' at-Tirmidhi", author: "Imam at-Tirmidhi", language: "Arabic", description: "Hadith Collection with legal and ethical content", link: "#" },
+    { title: "Sunan an-Nasa'i", author: "Imam an-Nasa'i", language: "Arabic", description: "Hadith Collection", link: "#" },
+    { title: "Sunan Ibn Majah", author: "Imam Ibn Majah", language: "Arabic", description: "Hadith Collection", link: "#" },
+    { title: "Al-Ghunyah li-Talibi Tariq al-Haqq", author: "Abdul Qadir Gilani", language: "Arabic", description: "Sufi treatise on spiritual path", link: "#" },
+    { title: "Ihya' 'Ulum al-Din", author: "Imam Al-Ghazali", language: "Arabic", description: "Revival of the Religious Sciences", link: "#" },
+    { title: "Minhaj al-Qasidin", author: "Ibn al-Jawzi", language: "Arabic", description: "Path of the Seekers", link: "#" },
+    { title: "The History of the Quran", author: "Theodor Nöldeke", language: "German", description: "Critical study of the Quran's compilation", link: "#" },
+    { title: "Le Coran", author: "Denise Masson", language: "French", description: "French translation of the Quran", link: "#" },
+    { title: "L'Islam et la Raison", author: "Tariq Ramadan", language: "French", description: "Islam and Reason", link: "#" },
+    { title: "Die Botschaft des Koran", author: "Muhammad Asad", language: "German", description: "The Message of the Quran (German translation)", link: "#" },
+    { title: "Islam: Glaube, Praxis, Geschichte", author: "Annemarie Schimmel", language: "German", description: "Islam: Faith, Practice, History", link: "#" },
+    { title: "Urdu Quran Translation", author: "Ahmed Raza Khan", language: "Urdu", description: "Kanzul Iman - Urdu Quran Translation", link: "#" },
+    { title: "Hayat-e-Sahaba", author: "Muhammad Yusuf Kandhlawi", language: "Urdu", description: "Lives of the Companions", link: "#" },
+    { title: "Turkish Islamic Art", author: "Various", language: "Turkish", description: "History and forms of Turkish Islamic art", link: "#" },
+    { title: "Islam ve Bilim", author: "Fuat Sezgin", language: "Turkish", description: "Islam and Science", link: "#" },
+    { title: "The Art of War", author: "Sun Tzu", language: "English", description: "Ancient Chinese military treatise", link: "#" },
+    { title: "Sapiens: A Brief History of Humankind", author: "Yuval Noah Harari", language: "English", description: "Exploration of human history", link: "#" },
+    { title: "Cosmos", author: "Carl Sagan", language: "English", description: "Journey through space and time", link: "#" },
+    { title: "Thinking, Fast and Slow", author: "Daniel Kahneman", language: "English", description: "Insights into human decision-making", link: "#" },
+    { title: "Atomic Habits", author: "James Clear", language: "English", description: "Easy & Proven Way to Build Good Habits & Break Bad Ones", link: "#" },
+    { title: "The 7 Habits of Highly Effective People", author: "Stephen Covey", language: "English", description: "Classic self-help book on effectiveness", link: "#" },
+    { title: "Rich Dad Poor Dad", author: "Robert Kiyosaki", language: "English", description: "Personal finance classic", link: "#" },
+    { title: "The Power of Habit", author: "Charles Duhigg", language: "English", description: "Why We Do What We Do in Life and Business", link: "#" },
+    { title: "Educated", author: "Tara Westover", language: "English", description: "Memoir about overcoming a difficult upbringing", link: "#" },
+    { title: "Factfulness", author: "Hans Rosling", language: "English", description: "Ten Reasons We're Wrong About the World – and Why Things Are Better Than You Think", link: "#" }
+  ];
+
+  // ==============================
+  // Library Rendering & Search
+  // ==============================
+  const libraryGrid = document.getElementById("library-grid");
+  const librarySearch = document.getElementById("library-search");
+  const langFilter = document.getElementById("lang-filter");
+
+  function updateLanguageFilter() {
+    const currentLang = langFilter.value;
+    langFilter.innerHTML = '<option value="">All Languages</option>'; // Reset
+    const languages = [...new Set(books.map(b => b.language))].sort();
+    languages.forEach(lang => {
+      const opt = document.createElement("option");
+      opt.value = lang;
+      opt.textContent = lang;
+      langFilter.appendChild(opt);
+    });
+    // Preserve selected language if it still exists
+    if (languages.includes(currentLang)) {
+      langFilter.value = currentLang;
+    }
+  }
+
+  function renderLibrary(filter = "", lang = "") {
+    libraryGrid.innerHTML = "";
+    const filtered = books.filter(b => 
+      (b.title.toLowerCase().includes(filter.toLowerCase()) || b.author.toLowerCase().includes(filter.toLowerCase())) &&
+      (lang === "" || b.language === lang)
+    );
+    filtered.forEach(b => {
+      const card = document.createElement("div");
+      card.className = "library-card";
+      card.innerHTML = `
+        <h4>${b.title}</h4>
+        <p><strong>${b.author}</strong></p>
+        <p>${b.language}</p>
+        <button class="btn view-book-btn">View Details</button>
+      `;
+      const btn = card.querySelector(".view-book-btn");
+      btn.addEventListener("click", () => openBookModal(b));
+      libraryGrid.appendChild(card);
+    });
+  }
+
+  librarySearch?.addEventListener("input", (e) => renderLibrary(e.target.value, langFilter.value));
+  langFilter?.addEventListener("change", (e) => renderLibrary(librarySearch.value, e.target.value));
+
+  updateLanguageFilter();
+  renderLibrary();
+
+  // ==============================
+  // Book Modal
+  // ==============================
+  const bookModal = document.getElementById("book-modal");
+  const modalCloseBtn = document.getElementById("modal-close-btn");
+  const modalBookTitle = document.getElementById("modal-book-title");
+  const modalBookAuthor = document.getElementById("modal-book-author");
+  const modalBookDescription = document.getElementById("modal-book-description");
+  const modalBookLink = document.getElementById("modal-book-link");
+
+  function openBookModal(book) {
+    modalBookTitle.textContent = book.title;
+    modalBookAuthor.textContent = `by ${book.author}`;
+    modalBookDescription.textContent = book.description;
+    modalBookLink.href = book.link;
+    bookModal.classList.remove("hidden");
+  }
+
+  modalCloseBtn?.addEventListener("click", () => bookModal.classList.add("hidden"));
+  bookModal?.addEventListener("click", (e) => {
+    if (e.target === bookModal) bookModal.classList.add("hidden");
+  });
+
+  // ==============================
+  // Add Book Modal & Form
+  // ==============================
+  const addBookBtn = document.getElementById("add-book-btn");
+  const addBookModal = document.getElementById("add-book-modal");
+  const addBookModalCloseBtn = document.getElementById("add-book-modal-close-btn");
+  const addBookForm = document.getElementById("add-book-form");
+
+  addBookBtn?.addEventListener("click", () => {
+    addBookModal.classList.remove("hidden");
+  });
+
+  addBookModalCloseBtn?.addEventListener("click", () => {
+    addBookModal.classList.add("hidden");
+  });
+
+  addBookModal?.addEventListener("click", (e) => {
+    if (e.target === addBookModal) addBookModal.classList.add("hidden");
+  });
+
+  addBookForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const newBook = {
+      title: e.target.title.value,
+      author: e.target.author.value,
+      language: e.target.language.value,
+      description: `${e.target.title.value} by ${e.target.author.value}`, // Auto-generate description
+      link: "#"
+    };
+    books.unshift(newBook); // Add to the beginning of the array
+    addBookForm.reset();
+    addBookModal.classList.add("hidden");
+    updateLanguageFilter(); // Update language dropdown with new language if any
+    renderLibrary(librarySearch.value, langFilter.value); // Re-render the library
+  });
+
+  // ==============================
+  // Halaqat Schedule
+  // ==============================
+  const halaqatData = [
+    { topic: "Tafsir of Quran", day: "Monday", time: "17:00", instructor: "Sheikh Ali" },
+    { topic: "Fiqh Basics", day: "Wednesday", time: "18:00", instructor: "Ustaz Omar" },
+    { topic: "Hadith Study", day: "Friday", time: "16:30", instructor: "Sheikh Ahmed" }
+  ];
+
+  const halaqatBody = document.getElementById("halaqat-body");
+  if (halaqatBody) {
+    halaqatData.forEach(h => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${h.topic}</td>
+        <td>${h.day}</td>
+        <td>${h.time}</td>
+        <td>${h.instructor}</td>
+        <td><button class="btn btn-primary join-btn">Join</button></td>
+      `;
+      row.querySelector(".join-btn").addEventListener("click", () => {
+        const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+        if (isLoggedIn) {
+          alert(`Your request to join the "${h.topic}" halaqah has been submitted.`);
+        } else {
+          alert("You must be logged in to join a halaqah. Please log in first.");
+          showPage('login'); // Redirect to the login page
+        }
+      });
+      halaqatBody.appendChild(row);
+    });
+  }
+
+  // ==============================
+  // Sectors Data & Rendering
+  // ==============================
+  const sectorsData = [
+    { name: "Dawah Sector", description: "Focuses on outreach and spreading Islamic knowledge.", type: "male" },
+    { name: "Tarbiyah Sector", description: "Deals with spiritual and personal development.", type: "male" },
+    { name: "Social Affairs Sector", description: "Organizes community service and social events.", type: "male" },
+    { name: "Sisters' Dawah", description: "Outreach and knowledge sharing for sisters.", type: "female" },
+    { name: "Sisters' Tarbiyah", description: "Spiritual development programs for sisters.", type: "female" },
+    { name: "Family Affairs", description: "Focuses on family-related topics and support.", type: "female" }
+  ];
+
+  const sectorTabs = document.querySelectorAll(".sector-tab");
+  const sectorsGrid = document.getElementById("sectors-grid");
+
+  function renderSectors(sectorType) {
+    // This function is now defined inside DOMContentLoaded and has access to showPage
+    if (!sectorsGrid) return;
+    sectorsGrid.innerHTML = "";
+    const filteredSectors = sectorsData.filter(sector => sector.type === sectorType);
+
+    filteredSectors.forEach(sector => {
+      const card = document.createElement("div");
+      card.className = "card"; // Using a generic card style
+      card.innerHTML = `
+        <h3>${sector.name}</h3>
+        <p>${sector.description}</p>
+        <button class="btn btn-primary join-sector-btn">Join Sector</button>
+      `;
+
+      card.querySelector('.join-sector-btn').addEventListener('click', () => {
+        const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+        if (isLoggedIn) {
+          alert(`Thank you for your interest! Your request to join the "${sector.name}" has been submitted for review.`);
+        } else {
+          alert("You must be logged in to join a sector. Please log in first.");
+          showPage('login'); // Redirect to the login page
+        }
+      });
+
+      sectorsGrid.appendChild(card);
+    });
+  }
+
+  sectorTabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      sectorTabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      const sectorType = tab.getAttribute("data-sector");
+      renderSectors(sectorType);
+    });
+  });
+
+  // Initial render for the default active tab
+  const initialSectorTab = document.querySelector(".sector-tab.active");
+  if (initialSectorTab) {
+    renderSectors(initialSectorTab.getAttribute("data-sector"));
+  }
+
+  // ==============================
+  // Events Data & Rendering
+  // ==============================
+  const eventsData = [
+    { title: "Annual Islamic Conference", date: "2025-11-15", description: "Join us for a day of inspiring lectures and community building.", bannerText: "Conference" },
+    { title: "Community Iftar", date: "2026-03-25", description: "Break your fast with the community during Ramadan.", bannerText: "Iftar" },
+    { title: "Sisters' Halaqah", date: "Weekly", description: "A weekly gathering for sisters to learn and connect.", bannerText: "Halaqah" },
+    { title: "Youth Football Tournament", date: "2025-12-05", description: "A friendly competition for the youth.", bannerText: "Sports" },
+    { title: "Islamic Calligraphy Workshop", date: "2025-11-22", description: "Learn the basics of beautiful Arabic calligraphy from a master artist.", bannerText: "Workshop" },
+    { title: "Winter Clothing Drive", date: "2025-12-01", description: "Donate warm clothes for those in need this winter season.", bannerText: "Charity" }
+  ];
+
+  function renderEvents() {
+    const eventsGrid = document.getElementById("events-grid");
+    if (!eventsGrid) return;
+    eventsGrid.innerHTML = "";
+    eventsData.forEach(event => {
+      const card = document.createElement("div");
+      card.className = "event-card";
+      card.innerHTML = `
+        <div class="event-card-banner">${event.bannerText}</div>
+        <div class="event-card-date">${event.date}</div>
+        <div class="event-card-content">
+          <h3>${event.title}</h3>
+          <p>${event.description}</p>
+        </div>
+      `;
+      eventsGrid.appendChild(card);
+    });
+  }
+  renderEvents();
+
+  // ==============================
+  // Student Portal Courses
+  // ==============================
+  const courses = [
+    { title: "Islamic Studies 101", description: "Introduction to Islam", instructor: "Sheikh Ali" },
+    { title: "Quran Recitation", description: "Learn proper recitation", instructor: "Sheikh Omar" },
+    { title: "Arabic Language", description: "Basics of Arabic grammar", instructor: "Ustaz Ahmed" },
+    { title: "Fiqh of Worship", description: "Detailed study of Salah, Zakat, Sawm, and Hajj.", instructor: "Sheikh Ali" },
+    { title: "Islamic History: The Rightly Guided Caliphs", description: "A study of the era of the Khulafa al-Rashidun.", instructor: "Ustaz Omar" }
+  ];
+
+  const coursesGrid = document.getElementById("courses-grid");
+  const courseSearch = document.getElementById("course-search");
+
+  function renderCourses(filter = "") {
+    coursesGrid.innerHTML = "";
+    const filtered = courses.filter(c => c.title.toLowerCase().includes(filter.toLowerCase()));
+    filtered.forEach(c => {
+      const card = document.createElement("div");
+      card.className = "course-card";
+      card.innerHTML = `
+        <h4>${c.title}</h4>
+        <p>${c.description}</p>
+        <p><strong>${c.instructor}</strong></p>
+        <button class="btn btn-primary enroll-btn" style="margin-top: auto;">Request to Enroll</button>
+      `;
+      card.querySelector(".enroll-btn").addEventListener("click", () => {
+        const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+        if (isLoggedIn) {
+          alert(`Your request to enroll in "${c.title}" has been submitted for review.`);
+        } else {
+          alert("You must be logged in to enroll in a course. Please log in first.");
+          showPage('login'); // Redirect to the login page
+        }
+      });
+      coursesGrid.appendChild(card);
+    });
+  }
+
+  courseSearch?.addEventListener("input", (e) => renderCourses(e.target.value));
+  renderCourses();
+
+  // ==============================
+  // Student Portal Tabs
+  // ==============================
+  const portalTabs = document.querySelectorAll(".portal-tab");
+  const studentContents = document.querySelectorAll(".student-content");
+
+  portalTabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      portalTabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      const panel = tab.getAttribute("data-panel");
+      studentContents.forEach(c => c.classList.add("hidden"));
+      document.getElementById(panel)?.classList.remove("hidden");
+    });
+  });
+
+  // ==============================
+  // Quizzes & Exams Data
+  // ==============================
+  const quizzesData = [
+    { title: "Quiz 1: Seerah of the Prophet", course: "Islamic Studies 101", dueDate: "2025-10-26", questions: 10 },
+    { title: "Quiz 1: Tajweed Rules", course: "Quran Recitation", dueDate: "2025-10-28", questions: 15 },
+    { title: "Vocabulary Test", course: "Arabic Language", dueDate: "2025-11-01", questions: 20 },
+    { title: "Quiz 2: Pillars of Iman", course: "Islamic Studies 101", dueDate: "2025-11-10", questions: 12 },
+    { title: "Grammar Quiz", course: "Arabic Language", dueDate: "2025-11-12", questions: 25 }
+  ];
+
+  const examsData = [
+    { title: "Midterm Exam", course: "Islamic Studies 101", date: "2025-11-15", time: "10:00 AM", duration: "2 hours" },
+    { title: "Final Oral Exam", course: "Quran Recitation", date: "2025-12-10", time: "09:00 AM", duration: "15 mins per student" },
+    { title: "Final Written Exam", course: "Arabic Language", date: "2025-12-18", time: "02:00 PM", duration: "90 minutes" }
+  ];
+
+  function renderQuizzes() {
+    const container = document.getElementById("quiz");
+    if (!container) return;
+    container.innerHTML = `<div class="quiz-grid"></div>`;
+    const grid = container.querySelector('.quiz-grid');
+
+    quizzesData.forEach(quiz => {
+      const card = document.createElement("div");
+      card.className = "quiz-card";
+      card.innerHTML = `
+        <h4>${quiz.title}</h4>
+        <p><strong>Course:</strong> ${quiz.course}</p>
+        <p><strong>Due Date:</strong> ${quiz.dueDate}</p>
+        <p><strong>Questions:</strong> ${quiz.questions}</p>
+        <button class="btn btn-primary" style="margin-top: 1rem;">Start Quiz</button>
+      `;
+      card.querySelector('button').addEventListener('click', () => {
+        alert(`Starting "${quiz.title}"... This is a placeholder.`);
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  function renderExams() {
+    const container = document.getElementById("exam");
+    if (!container) return;
+    container.innerHTML = `<div class="exam-grid"></div>`;
+    const grid = container.querySelector('.exam-grid');
+
+    examsData.forEach(exam => {
+      const card = document.createElement("div");
+      card.className = "exam-card";
+      card.innerHTML = `
+        <h4>${exam.title}</h4>
+        <p><strong>Course:</strong> ${exam.course}</p>
+        <p><strong>Date:</strong> ${exam.date} at ${exam.time}</p>
+        <p><strong>Duration:</strong> ${exam.duration}</p>
+        <button class="btn btn-outline-large" style="margin-top: 1rem;">View Details</button>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  renderQuizzes();
+  renderExams();
+
+  // ==============================
+  // Prayer & Azkar Tabs
+  // ==============================
+  const azkarTabs = document.querySelectorAll(".azkar-tab");
+  const azkarContents = document.querySelectorAll(".azkar-content");
+
+  azkarTabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      azkarTabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      const panel = tab.getAttribute("data-azkar");
+      azkarContents.forEach(c => c.classList.add("hidden"));
+      document.getElementById(`${panel}-azkar`)?.classList.remove("hidden");
+    });
+  });
+
+  // ==============================
+  // Prayer Times & Azkar Data
+  // ==============================
+  const morningAzkarData = [
+    { arabic: "آيَةُ الْكُرْسِيِّ", translation: "Ayat al-Kursi (Al-Baqarah 2:255)", count: "1 time" },
+    { arabic: "سُورَةُ الْإِخْلَاصِ، الْفَلَقِ، النَّاسِ", translation: "Surah Al-Ikhlas, Al-Falaq, An-Nas", count: "3 times" },
+    { arabic: "سُبْحَانَ اللهِ وَبِحَمْدِهِ", translation: "Glory is to Allah and praise is to Him.", count: "100 times" },
+    { arabic: "أَسْتَغْفِرُ اللهَ وَأَتُوبُ إِلَيْهِ", translation: "I seek the forgiveness of Allah and repent to Him.", count: "100 times" },
+    { arabic: "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ", translation: "O Allah, we ask for your peace and blessings upon our Prophet Muhammad.", count: "10 times" }
+  ];
+
+  const eveningAzkarData = [
+    { arabic: "آيَةُ الْكُرْسِيِّ", translation: "Ayat al-Kursi (Al-Baqarah 2:255)", count: "1 time" },
+    { arabic: "سُورَةُ الْإِخْلَاصِ، الْفَلَقِ، النَّاسِ", translation: "Surah Al-Ikhlas, Al-Falaq, An-Nas", count: "3 times" },
+    { arabic: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ", translation: "We have reached the evening and at this very time all sovereignty belongs to Allah.", count: "1 time" },
+    { arabic: "بِسْمِ اللهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّmِيعُ الْعَلِيمُ", translation: "In the name of Allah with whose name nothing is harmed on earth nor in the heavens and He is The All-Seeing, The All-Knowing.", count: "3 times" }
+  ];
+
+  const prayerTimesData = [
+    { name: "Fajr", time: "05:15 AM" },
+    { name: "Sunrise", time: "06:30 AM" },
+    { name: "Dhuhr", time: "12:30 PM" },
+    { name: "Asr", time: "03:45 PM" },
+    { name: "Maghrib", time: "06:40 PM" },
+    { name: "Isha", time: "08:00 PM" }
+  ];
+
+  function renderPrayerTimes() {
+    const container = document.getElementById("prayer-times-container");
+    if (!container) return;
+    container.innerHTML = "";
+    prayerTimesData.forEach(prayer => {
+      const card = document.createElement("div");
+      card.className = "prayer-time-card";
+      card.innerHTML = `
+        <h4>${prayer.name}</h4>
+        <p>${prayer.time}</p>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function renderAzkar() {
+    const morningContainer = document.getElementById("morning-azkar");
+    const eveningContainer = document.getElementById("evening-azkar");
+
+    const createAzkarHTML = (data) => {
+      return data.map(azkar => `
+        <div class="azkar-item">
+          <p class="azkar-arabic">${azkar.arabic}</p>
+          <p class="azkar-translation"><em>${azkar.translation}</em></p>
+          <p class="azkar-count"><strong>Recite:</strong> ${azkar.count}</p>
+        </div>
+      `).join('');
+    };
+
+    if (morningContainer) morningContainer.innerHTML = createAzkarHTML(morningAzkarData);
+    if (eveningContainer) eveningContainer.innerHTML = createAzkarHTML(eveningAzkarData);
+  }
+
+  renderPrayerTimes();
+
+  // Azan Player Logic
+  const playAzanBtn = document.getElementById('play-azan-btn');
+  const playAzanText = document.getElementById('play-azan-text');
+  const azanAudio = document.getElementById('azan-audio');
+
+  playAzanBtn?.addEventListener('click', () => {
+    if (azanAudio.paused) {
+      azanAudio.play();
+      playAzanText.textContent = 'Pause Azan';
+      playAzanBtn.querySelector('i').setAttribute('data-lucide', 'pause');
+    } else {
+      azanAudio.pause();
+      playAzanText.textContent = 'Play Azan';
+      playAzanBtn.querySelector('i').setAttribute('data-lucide', 'play');
+    }
+    lucide.createIcons(); // Re-render the icon to show play/pause
+  });
+
+  azanAudio?.addEventListener('ended', () => {
+    playAzanText.textContent = 'Play Azan';
+    playAzanBtn.querySelector('i').setAttribute('data-lucide', 'play');
+    lucide.createIcons(); // Re-render the icon when audio finishes
+  });
+
+  renderAzkar();
+
+  // Render all Lucide icons
+  lucide.createIcons();
+
+});
