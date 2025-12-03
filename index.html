@@ -16,7 +16,7 @@
             <div class="container">
                 <div class="logo-area-centered" role="button" tabindex="0" onclick="navigateTo('home')" onkeydown="handleKeydown(event, () => navigateTo('home'))">
                     <div class="logo-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M2 10.2s1.31-1.03 3-1.2c2.42-.25 3.58.57 5 1.2 2.42.25 3.58-.57 5-1.2 2.42-.25 3.58.57 5 1.2v11.8H2Z"/><path d="M12 2v2.5"/><path d="M6 12v10"/><path d="M18 12v10"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M2 10.2s1.31-1.03 3-1.2c2.42-.25 3.58.57 5 1.2 2.42.25 3.58-.57 5 1.2 2.42-.25 3.58.57 5 1.2v11.8H2Z"/><path d="M12 2v2.5"/><path d="M6 12v10"/><path d="M18 12v10"/></svg>
                     </div>
                     <div class="logo-text">
                         <h1>Muslim Student Jema'a</h1>
@@ -33,13 +33,21 @@
                 <!-- Desktop Nav -->
                 <nav class="desktop-nav">
                     <a href="#" onclick="navigateTo('home')" data-i18n-key="navHome">Home</a>
-                    <a href="#" onclick="navigateTo('about')" data-i18n-key="navAbout">About</a>
                     <a href="#" onclick="navigateTo('library')" data-i18n-key="navLibrary">Library</a>
                     <a href="#" onclick="navigateTo('halaqat')" data-i18n-key="navHalaqat">Halaqat</a>
-                    <a href="#" onclick="navigateTo('events')" data-i18n-key="navEvents">Events</a>
+                    <!-- Events dropdown -->
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn" onclick="navigateTo('events')" data-i18n-key="navEvents">
+                            Events <i data-lucide="chevron-down" style="width: 16px; height: 16px;"></i>
+                        </a>
+                        <div class="dropdown-content" id="events-dropdown">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
                     <a href="#" onclick="navigateTo('sectors')" data-i18n-key="navSectors">Sectors</a>
-                    <a href="#" onclick="navigateTo('signup')" data-i18n-key="navSignUp">Join</a>
+                    <a href="#" onclick="navigateTo('about')" data-i18n-key="navAbout">About</a>
                     <a href="#" onclick="navigateTo('contact')">Contact</a>
+                    <a href="#" onclick="navigateTo('signup')" data-i18n-key="navSignUp">Join</a>
                     <div class="language-switcher-nav">
                         <select id="lang-select-nav" onchange="setLanguage(this.value)">
                             <option value="en">English</option>
@@ -56,13 +64,20 @@
         <!-- Mobile Menu (Hidden by default) -->
         <div id="mobile-menu" class="mobile-nav hidden">
             <a href="#" onclick="navigateTo('home')" data-i18n-key="navHome">Home</a>
-            <a href="#" onclick="navigateTo('about')" data-i18n-key="navAbout">About</a>
             <a href="#" onclick="navigateTo('library')" data-i18n-key="navLibrary">Library</a>
             <a href="#" onclick="navigateTo('halaqat')" data-i18n-key="navHalaqat">Halaqat</a>
-            <a href="#" onclick="navigateTo('events')" data-i18n-key="navEvents">Events</a>
+            <!-- Events with submenu toggle -->
+            <a href="#" onclick="toggleMobileEventsSubmenu()" data-i18n-key="navEvents" style="display: flex; justify-content: space-between; align-items: center;">
+                Events <i data-lucide="chevron-down" style="width: 16px; height: 16px;"></i>
+            </a>
+            <!-- Upcoming Events submenu -->
+            <div id="mobile-events-submenu" style="padding-left: 20px; display: none;">
+                <!-- Populated by JS -->
+            </div>
             <a href="#" onclick="navigateTo('sectors')" data-i18n-key="navSectors">Sectors</a>
-            <a href="#" onclick="navigateTo('signup')" data-i18n-key="navSignUp">Join</a>
+            <a href="#" onclick="navigateTo('about')" data-i18n-key="navAbout">About</a>
             <a href="#" onclick="navigateTo('contact')">Contact</a>
+            <a href="#" onclick="navigateTo('signup')" data-i18n-key="navSignUp">Join</a>
         </div>
     </header>
 
@@ -170,108 +185,23 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- SECTION: SIGN UP -->
-        <section id="signup" class="hidden-section">
-            <div class="form-container">
-                <div class="form-header">
-                    <h2>Student Registration</h2>
-                    <p>Create your account to join the Jama'a</p>
+            
+            <!-- Community Photo Gallery -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Our Community</h3>
                 </div>
-
-                <!-- Gender Tabs -->
-                <div class="gender-tabs">
-                    <button id="tab-male" class="gender-tab active" onclick="setGender('male')">Male Student (Brother)</button>
-                    <button id="tab-female" class="gender-tab" onclick="setGender('female')">Female Student (Sister)</button>
+                <div class="gallery-container">
+                    <div class="gallery-item">
+                        <img src="images/real/community/community1.jpg" alt="Community Gathering" onerror="this.style.display='none'">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/real/events/iftar1.jpg" alt="Community Event" onerror="this.style.display='none'">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/real/study/study1.jpg" alt="Study Session" onerror="this.style.display='none'">
+                    </div>
                 </div>
-
-                <div id="gender-alert" class="alert-box male">
-                    You are registering for the Brothers' Portal.
-                </div>
-
-                <form id="signup-form">
-                    <div class="form-group-row">
-                        <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" placeholder="write full name" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Gender</label>
-                            <input type="text" id="gender-input" value="Male" disabled>
-                        </div>
-                    </div>
-
-                    <h3 class="form-section-title">Academic Information</h3>
-                    <div class="form-group-row">
-                        <div class="form-group">
-                            <label>Education Level</label>
-                            <select id="edu-level" onchange="toggleUniversityField()">
-                                <option value="Elementary">Elementary</option>
-                                <option value="Highschool">High School</option>
-                                <option value="College">College</option>
-                                <option value="University" selected>University</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Dynamic University Dropdown -->
-                    <div class="form-group" id="uni-dropdown-container">
-                        <label>Select University</label>
-                        <select id="uni-select" required>
-                            <option value="">-- Choose University --</option>
-                            <!-- Populated by JS -->
-                        </select>
-                    </div>
-
-                    <div class="form-group-row">
-                        <div class="form-group">
-                            <label>Campus</label>
-                            <input type="text" placeholder="e.g. Main Campus" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Department</label>
-                            <input type="text" placeholder="e.g. Computer Science" required>
-                        </div>
-                    </div>                    
-
-                    <div class="form-group-row">
-                        <div class="form-group">
-                            <label>Year</label>
-                            <select required>
-                                <option value="">-- Select Year --</option>
-                                <option>1st Year</option>
-                                <option>2nd Year</option>
-                                <option>3rd Year</option>
-                                <option>4th Year</option>
-                                <option>5th Year</option>
-                                <option>GC / Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Student ID</label>
-                            <input type="text" placeholder="ID No." required>
-                        </div>
-                    </div>
-
-                    <h3 class="form-section-title">Contact Information</h3>
-                    <div class="form-group-row">
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="text" placeholder="+251..." required>
-                        </div>
-                        <div class="form-group">
-                            <label>Telegram Username</label>
-                            <input type="text" placeholder="@username">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" placeholder="name@example.com" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-block">Register Account</button>
-                </form>
             </div>
         </section>
 
@@ -383,8 +313,136 @@
             <div class="card content-card">
                 <h3>Get in Touch</h3>
                 <p>If you have any questions, suggestions, or need support, please feel free to reach out to us.</p>
-                <p><strong>Email:</strong> contact@msjportal.example.com</p>
-                <p><strong>Telegram:</strong> @msj_support</p>
+                <p><strong>Email:</strong> <a href="mailto:muslimstudentjemea@gmail.com">muslimstudentjemea@gmail.com</a></p>
+                <p><strong>Telegram:</strong> <a href="https://t.me/msj_support" target="_blank">@msj_support</a></p>
+            </div>
+            
+            <!-- Map Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Our Location</h3>
+                </div>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.3775087244937!2d38.76083331478445!3d9.02900009351449!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85ce7d9d9d9d%3A0x3a3e0f30d0000000!2sAddis%20Ababa%20University!5e0!3m2!1sen!2set!4v1650000000000!5m2!1sen!2set" 
+                        width="100%" 
+                        height="300" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Addis Ababa University Location"
+                        onerror="handleMapError()">
+                    </iframe>
+                    <p class="map-caption">Addis Ababa University, Main Campus<br>
+                    <small>You can also find us at the Student Center, Building B, Room 201</small></p>
+                </div>
+                <div class="map-fallback" id="map-fallback">
+                    <p>Having trouble viewing the map? <a href="https://maps.google.com/maps?q=Addis+Ababa+University" target="_blank">Open in Google Maps</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: SIGN UP -->
+        <section id="signup" class="hidden-section">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Student Registration</h2>
+                    <p>Create your account to join the Jama'a</p>
+                </div>
+
+                <!-- Gender Tabs -->
+                <div class="gender-tabs">
+                    <button id="tab-male" class="gender-tab active" onclick="setGender('male')">Male Student (Brother)</button>
+                    <button id="tab-female" class="gender-tab" onclick="setGender('female')">Female Student (Sister)</button>
+                </div>
+
+                <div id="gender-alert" class="alert-box male">
+                    You are registering for the Brothers' Portal.
+                </div>
+
+                <form id="signup-form">
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="write full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <input type="text" id="gender-input" value="Male" disabled>
+                        </div>
+                    </div>
+
+                    <h3 class="form-section-title">Academic Information</h3>
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label>Education Level</label>
+                            <select id="edu-level" onchange="toggleUniversityField()">
+                                <option value="Elementary">Elementary</option>
+                                <option value="Highschool">High School</option>
+                                <option value="College">College</option>
+                                <option value="University" selected>University</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic University Dropdown -->
+                    <div class="form-group" id="uni-dropdown-container">
+                        <label>Select University</label>
+                        <select id="uni-select" required>
+                            <option value="">-- Choose University --</option>
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label>Campus</label>
+                            <input type="text" placeholder="e.g. Main Campus" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Department</label>
+                            <input type="text" placeholder="e.g. Computer Science" required>
+                        </div>
+                    </div>                    
+
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label>Year</label>
+                            <select required>
+                                <option value="">-- Select Year --</option>
+                                <option>1st Year</option>
+                                <option>2nd Year</option>
+                                <option>3rd Year</option>
+                                <option>4th Year</option>
+                                <option>5th Year</option>
+                                <option>GC / Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Student ID</label>
+                            <input type="text" placeholder="ID No." required>
+                        </div>
+                    </div>
+
+                    <h3 class="form-section-title">Contact Information</h3>
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" placeholder="+251..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Telegram Username</label>
+                            <input type="text" placeholder="@username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="name@example.com" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Register Account</button>
+                </form>
             </div>
         </section>
 
@@ -428,7 +486,7 @@
         </div>
         
         <div class="footer-bottom">
-            &copy; 2024 Muslim Student Jama'a.
+            &copy; 2025 Muslim Student Jama'a.
         </div>
     </footer>
 
@@ -436,486 +494,4 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="script.js" defer></script>
 </body>
-<<<<<<< HEAD
 </html>
-                        <h2 class="section-title">Events & Prayer Times</h2>
-
-                        <!-- Prayer Times Widget -->
-                        <div class="card prayer-card" style="max-width: 500px; margin: 0 auto 2rem auto;">
-                            <div class="card-header">
-                                <h3>Today's Prayer Times (Addis Ababa)</h3>
-                                <i data-lucide="moon"></i>
-                            </div>
-                            <ul id="events-prayer-list" class="prayer-list">
-                                <!-- Populated by JS -->
-                            </ul>
-                        </div>
-                    </section>
-
-                    <!-- SECTION: CONTACT -->
-                    <section id="contact" class="hidden-section">
-                        <h2 class="section-title">Contact Us</h2>
-                        <div class="card content-card">
-                            <h3>Get in Touch</h3>
-                            <p>If you have any questions, suggestions, or need support, please feel free to reach out to us.</p>
-                            <p><strong>Email:</strong> contact@msjportal.example.com</p>
-                            <p><strong>Telegram:</strong> @msj_support</p>
-                        </div>
-                    </section>
-
-                </main>
-
-                <footer>
-                    <div class="container footer-content">
-                        <div class="footer-col">
-                            <h3>Muslim Student Jama'a</h3>
-                            <p>Serving the students, strengthening the Ummah.</p>
-                        </div>
-                        <div class="footer-col">
-                            <h3>Follow Us</h3>
-                            <div class="social-links">
-                                <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
-                                <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
-                                <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
-                                <a href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
-                                <a href="#" onclick="navigateTo('contact')" aria-label="Contact Us"><i data-lucide="mail"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer-bottom">
-                        &copy; 2024 Muslim Student Jama'a.
-                    </div>
-                </footer>
-
-                <!-- Icon Library (Lucide) -->
-                <script src="https://unpkg.com/lucide@latest"></script>
-                <script src="scrip.js" defer></script>
-            </body>
-            </html>
-
-                        <!-- Link to the separate CSS file -->
-                        <!-- Google Fonts: Lora for headings, Inter for body -->
-                        <link rel="preconnect" href="https://fonts.googleapis.com">
-                        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-                        <link rel="stylesheet" href="style.css">
-                    </head>
-                    <body>
-
-                        <!-- Header -->
-                        <header class="main-header">
-                            <div class="header-top">
-                                <div class="container">
-                                    <div class="logo-area-centered" role="button" tabindex="0" onclick="navigateTo('home')" onkeydown="handleKeydown(event, () => navigateTo('home'))">
-                                        <div class="logo-circle">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M2 10.2s1.31-1.03 3-1.2c2.42-.25 3.58.57 5 1.2 2.42.25 3.58-.57 5-1.2 2.42-.25 3.58.57 5 1.2v11.8H2Z"/><path d="M12 2v2.5"/><path d="M6 12v10"/><path d="M18 12v10"/></svg>
-                                        </div>
-                                        <div class="logo-text">
-                                            <h1>Muslim Student Jema'a </h1>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="header-bottom">
-                                <div class="container header-content">
-                                    <!-- Mobile Menu Toggle -->
-                                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                                        <i data-lucide="menu"></i>
-                                    </button>
-                                    <!-- Desktop Nav -->
-                                    <nav class="desktop-nav">
-                                        <a href="#" onclick="navigateTo('home')" data-i18n-key="navHome">Home</a>
-                                        <a href="#" onclick="navigateTo('about')" data-i18n-key="navAbout">About</a>
-                                        <a href="#" onclick="navigateTo('library')" data-i18n-key="navLibrary">Library</a>
-                                        <a href="#" onclick="navigateTo('halaqat')" data-i18n-key="navHalaqat">Halaqat</a>
-                                        <a href="#" onclick="navigateTo('events')" data-i18n-key="navEvents">Events</a>
-                                        <a href="#" onclick="navigateTo('sectors')" data-i18n-key="navSectors">Sectors</a>
-                                        <a href="#" onclick="navigateTo('signup')" data-i18n-key="navSignUp">Join</a>
-                                        <a href="#" onclick="navigateTo('contact')">Contact</a>
-                                        <div class="language-switcher-nav">
-                                            <select id="lang-select-nav" onchange="setLanguage(this.value)">
-                                                <option value="en">English</option>
-                                                <option value="ar">العربية</option>
-                                                <option value="am">አማርኛ</option>
-                                                <option value="om">Afaan Oromoo</option>
-                                            </select>
-                                            <i data-lucide="globe"></i>
-                                        </div>
-                                    </nav>
-                                </div>
-                            </div>
-
-                            <!-- Mobile Menu (Hidden by default) -->
-                            <div id="mobile-menu" class="mobile-nav hidden">
-                                <a href="#" onclick="navigateTo('home')" data-i18n-key="navHome">Home</a>
-                                <a href="#" onclick="navigateTo('about')" data-i18n-key="navAbout">About</a>
-                                <a href="#" onclick="navigateTo('library')" data-i18n-key="navLibrary">Library</a>
-                                <a href="#" onclick="navigateTo('halaqat')" data-i18n-key="navHalaqat">Halaqat</a>
-                                <a href="#" onclick="navigateTo('events')" data-i18n-key="navEvents">Events</a>
-                                <a href="#" onclick="navigateTo('sectors')" data-i18n-key="navSectors">Sectors</a>
-                                <a href="#" onclick="navigateTo('signup')" data-i18n-key="navSignUp">Join</a>
-                                <a href="#" onclick="navigateTo('contact')">Contact</a>
-                            </div>
-                        </header>
-
-                        <main id="main-container" class="container">
-        
-                            <!-- New Inspirational Banner -->
-                            <div class="inspirational-banner">
-                                <div class="banner-quotes">
-                                    <div class="banner-quote active">
-                                        <p>"السلام عليكم ورحمة الله وبركاته."</p>
-                                      <small>أهلا وسهلا بكم</small>
-                                    </div>
-                
-                
-                                </div>
-                            </div>
-
-                            <!-- SECTION: HOME -->
-                            <section id="home" class="active-section">
-                                <div class="hero">
-                                    <h2 data-i18n-key="heroTitle">Welcome to the Muslim Student Jema'a Portal</h2>
-                                    <p data-i18n-key="heroSubtitle">Your hub for prayer times, community events, Islamic learning, and student engagement.</p>
-                                    <div class="hero-buttons">
-                                        <button class="btn btn-primary-large" onclick="navigateTo('signup')" data-i18n-key="heroBtnJoin">Join the Jemea</button>
-                                        <button class="btn btn-outline-large" onclick="navigateTo('events')" data-i18n-key="heroBtnEvents">See Upcoming Events</button>
-                                    </div>
-                                </div>
-
-                                <!-- Upcoming Events & Announcements -->
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 data-i18n-key="upcomingEvents">Upcoming Events & Announcements</h3>
-                                    </div>
-                                    <div class="events-slider-placeholder">
-                                        <p data-i18n-key="eventsPlaceholder">Featured events slider will be implemented here.</p>
-                                    </div>
-                                </div>
-
-                                <!-- New Quick Links Section -->
-                                <div class="quick-links-container">
-                                    <h3 class="section-subtitle" data-i18n-key="explorePortal">Explore Our Portal</h3>
-                                    <div class="quick-links-grid">
-                                        <div class="quick-link-card" role="button" tabindex="0" onclick="navigateTo('library')" onkeydown="handleKeydown(event, () => navigateTo('library'))">
-                                            <i data-lucide="library"></i> <span>Digital Library</span>
-                                        </div>
-                                        <div class="quick-link-card" role="button" tabindex="0" onclick="navigateTo('halaqat')" onkeydown="handleKeydown(event, () => navigateTo('halaqat'))">
-                                            <i data-lucide="book-user"></i> <span>Halaqat Schedule</span>
-                                        </div>
-                                        <div class="quick-link-card" role="button" tabindex="0" onclick="navigateTo('sectors')" onkeydown="handleKeydown(event, () => navigateTo('sectors'))">
-                                            <i data-lucide="users"></i> <span>Join a Sector</span>
-                                        </div>
-                                        <div class="quick-link-card" role="button" tabindex="0" onclick="navigateTo('events')" onkeydown="handleKeydown(event, () => navigateTo('events'))">
-                                            <i data-lucide="calendar-days"></i> <span>Events & Prayer</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="dashboard-grid">
-                                    <!-- Prayer Times -->
-                                    <div class="card prayer-card">
-                                        <div class="card-header">
-                                            <h3 data-i18n-key="prayerTimes">Prayer Times</h3>
-                                            <i data-lucide="moon"></i>
-                                        </div>
-                                        <ul id="home-prayer-list" class="prayer-list"></ul>
-                                        <small>Local time: Addis Ababa</small>
-                                    </div>
-
-                                    <!-- Azkar -->
-                                    <div class="card azkar-card">
-                                        <div class="card-header">
-                                            <h3 data-i18n-key="dailyAzkar">Daily Azkar</h3>
-                                            <i data-lucide="sun"></i>
-                                        </div>
-                                        <!-- New Azkar Tabs -->
-                                        <div class="azkar-tabs">
-                                            <button id="azkar-tab-morning" class="azkar-tab active" onclick="setAzkarTab('morning')" data-i18n-key="azkarMorning">Morning</button>
-                                            <button id="azkar-tab-evening" class="azkar-tab" onclick="setAzkarTab('evening')" data-i18n-key="azkarEvening">Evening</button>
-                                        </div>
-                                        <div id="azkar-container-wrapper">
-                                            <div id="azkar-container" class="azkar-grid">
-                                                <!-- Populated by JS -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <!-- SECTION: ABOUT (Mission/Vision/Objectives) -->
-                            <section id="about" class="hidden-section">
-                                <h2 class="section-title" data-i18n-key="aboutTitle">About Us</h2>
-                                <div class="card content-card about-container">
-                                    <div class="about-tabs">
-                                        <button id="tab-mission" class="about-tab active" onclick="showAboutTab('mission')" data-i18n-key="aboutTabMission">Mission</button>
-                                        <button id="tab-vision" class="about-tab" onclick="showAboutTab('vision')" data-i18n-key="aboutTabVision">Vision</button>
-                                        <button id="tab-objectives" class="about-tab" onclick="showAboutTab('objectives')" data-i18n-key="aboutTabObjectives">Objectives</button>
-                                    </div>
-                                    <div class="about-content-wrapper">
-                                        <div id="content-mission" class="about-content active">
-                                            <p data-i18n-key="aboutMissionText"></p>
-                                        </div>
-                                        <div id="content-vision" class="about-content">
-                                            <p data-i18n-key="aboutVisionText"></p>
-                                        </div>
-                                        <div id="content-objectives" class="about-content">
-                                            <ul data-i18n-key="aboutObjectivesList"></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <!-- SECTION: SIGN UP -->
-                            <section id="signup" class="hidden-section">
-                                <div class="form-container">
-                                    <div class="form-header">
-                                        <h2>Student Registration</h2>
-                                        <p>Create your account to join the Jama'a</p>
-                                    </div>
-
-                                    <!-- Gender Tabs -->
-                                    <div class="gender-tabs">
-                                        <button id="tab-male" class="gender-tab active" onclick="setGender('male')">Male Student (Brother)</button>
-                                        <button id="tab-female" class="gender-tab" onclick="setGender('female')">Female Student (Sister)</button>
-                                    </div>
-
-                                    <div id="gender-alert" class="alert-box male">
-                                        You are registering for the Brothers' Portal.
-                                    </div>
-
-                                    <form id="signup-form">
-                                        <div class="form-group-row">
-                                            <div class="form-group">
-                                                <label>Full Name</label>
-                                                <input type="text" placeholder="write full name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Gender</label>
-                                                <input type="text" id="gender-input" value="Male" disabled>
-                                            </div>
-                                        </div>
-
-                                        <h3 class="form-section-title">Academic Information</h3>
-                                        <div class="form-group-row">
-                                            <div class="form-group">
-                                                <label>Education Level</label>
-                                                <select id="edu-level" onchange="toggleUniversityField()">
-                                                    <option value="Elementary">Elementary</option>
-                                                    <option value="Highschool">High School</option>
-                                                    <option value="College">College</option>
-                                                    <option value="University" selected>University</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Dynamic University Dropdown -->
-                                        <div class="form-group" id="uni-dropdown-container">
-                                            <label>Select University</label>
-                                            <select id="uni-select" required>
-                                                <option value="">-- Choose University --</option>
-                                                <!-- Populated by JS -->
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group-row">
-                                            <div class="form-group">
-                                                <label>Campus</label>
-                                                <input type="text" placeholder="e.g. Main Campus" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Department</label>
-                                                <input type="text" placeholder="e.g. Computer Science" required>
-                                            </div>
-                                        </div>
-                    
-                                        <div class="form-group-row">
-                                            <div class="form-group">
-                                                <label>Year</label>
-                                                <select required>
-                                                    <option value="">-- Select Year --</option>
-                                                    <option>1st Year</option>
-                                                    <option>2nd Year</option>
-                                                    <option>3rd Year</option>
-                                                    <option>4th Year</option>
-                                                    <option>5th Year</option>
-                                                    <option>GC / Other</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Student ID</label>
-                                                <input type="text" placeholder="ID No." required>
-                                            </div>
-                                        </div>
-
-                                        <h3 class="form-section-title">Contact Information</h3>
-                                        <div class="form-group-row">
-                                            <div class="form-group">
-                                                <label>Phone Number</label>
-                                                <input type="text" placeholder="+251..." required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Telegram Username</label>
-                                                <input type="text" placeholder="@username">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Email Address</label>
-                                            <input type="email" placeholder="name@example.com" required>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary btn-block">Register Account</button>
-                                    </form>
-                                </div>
-                            </section>
-
-                            <!-- SECTION: SECTORS -->
-                            <section id="sectors" class="hidden-section">
-                                <h2 class="section-title">Member Sector Registration</h2>
-            
-                                <div class="sector-tabs">
-                                    <button id="sector-tab-male" class="sector-tab active" onclick="setSectorTab('male')">Brothers' Sectors</button>
-                                    <button id="sector-tab-female" class="sector-tab" onclick="setSectorTab('female')">Sisters' Sectors</button>
-                                </div>
-
-                                <div id="sectors-grid" class="cards-grid">
-                                    <!-- Populated by JS -->
-                                </div>
-                            </section>
-
-                            <!-- SECTION: LIBRARY -->
-                            <section id="library" class="hidden-section">
-                                <h2 class="section-title">Digital Library</h2>
-            
-                                <div class="filters-bar">
-                                    <span>Filters:</span>
-                                    <select id="lib-lang" onchange="filterLibrary()">
-                                        <option value="All">All Languages</option>
-                                        <option value="Afaan Oromo">Afaan Oromo</option>
-                                        <option value="English">English</option>
-                                        <option value="Arabic">Arabic</option>
-                                        <option value="Amharic">Amharic</option>
-                                    </select>
-                                    <select id="lib-main-cat" onchange="filterLibrary()">
-                                        <option value="All">All Categories</option>
-                                        <option value="Sharia">Sharia (Quran, Fiqh, Hadith)</option>
-                                        <option value="Academic">Academic (Modules, Exams, PPTs)</option>
-                                        <option value="General Knowledge">General Knowledge (Self-Help, Psychology)</option>
-                                    </select>
-                                    <!-- New Sub-category dropdown -->
-                                    <select id="lib-sub-cat" onchange="filterLibrary()">
-                                        <option value="All">All Sub-Categories</option>
-                                        <!-- Dynamically populated by JS -->
-                                    </select>
-                                </div>
-
-                                <div id="library-grid" class="library-grid">
-                                    <!-- Populated by JS -->
-                                </div>
-                            </section>
-
-                            <!-- SECTION: HALAQAT -->
-                            <section id="halaqat" class="hidden-section">
-                                <h2 class="section-title">Halaqat Schedule</h2>
-                                <div class="table-container">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Topic</th>
-                                                <th>Day</th>
-                                                <th>Time</th>
-                                                <th>Instructor</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="halaqat-body">
-                                            <!-- Populated by JS -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </section>
-
-                            <!-- SECTION: SIGN IN -->
-                            <section id="signin" class="hidden-section">
-                                <div class="form-container small-form">
-                                    <div class="form-header">
-                                        <h2>Member Sign In</h2>
-                                    </div>
-                                    <form onsubmit="showModal('Sign In Status', 'Sign In functionality is pending implementation. Please use the Sign Up form to register.', 'info'); return false;">
-                                        <div class="form-group">
-                                            <label>Email or ID</label>
-                                            <input type="text" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Password</label>
-                                            <input type="password" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                                    </form>
-                                </div>
-                            </section>
-
-                            <!-- SECTION: EVENTS -->
-                            <section id="events" class="hidden-section">
-                                <h2 class="section-title">Events & Prayer Times</h2>
-
-                                <!-- Prayer Times Widget -->
-                                <div class="card prayer-card" style="max-width: 500px; margin: 0 auto 2rem auto;">
-                                    <div class="card-header">
-                                        <h3>Today's Prayer Times (Addis Ababa)</h3>
-                                        <i data-lucide="moon"></i>
-                                    </div>
-                                    <ul id="events-prayer-list" class="prayer-list">
-                                        <!-- Populated by JS -->
-                                    </ul>
-                                </div>
-                            </section>
-
-                            <!-- SECTION: CONTACT -->
-                            <section id="contact" class="hidden-section">
-                                <h2 class="section-title">Contact Us</h2>
-                                <div class="card content-card">
-                                    <h3>Get in Touch</h3>
-                                    <p>If you have any questions, suggestions, or need support, please feel free to reach out to us.</p>
-                                    <p><strong>Email:</strong> contact@msjportal.example.com</p>
-                                    <p><strong>Telegram:</strong> @msj_support</p>
-                                </div>
-                            </section>
-
-                        </main>
-
-                        <footer>
-                            <div class="container footer-content">
-                                <div class="footer-col">
-                                    <h3>Muslim Student Jama'a</h3>
-                                    <p>Serving the students, strengthening the Ummah.</p>
-                                </div>
-                                <div class="footer-col">
-                                    <h3>Follow Us</h3>
-                                    <div class="social-links">
-                                        <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
-                                        <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
-                                        <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
-                                        <a href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
-                                        <a href="#" onclick="navigateTo('contact')" aria-label="Contact Us"><i data-lucide="mail"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="footer-bottom">
-                                &copy; 2024 Muslim Student Jama'a.
-                            </div>
-                        </footer>
-
-                        <!-- Icon Library (Lucide) -->
-                        <script src="https://unpkg.com/lucide@latest"></script>
-                        <script src="scrip.js" defer></script>
-                    
-                    <a href="#" onclick="navigateTo('sectors')" data-i18n-key="navSectors">Sectors</a>
-</body>
-</html>
-
-
-=======
-</html>
->>>>>>> 2b6207978c600ca9358dc65c6f866ace65a1f7f6
