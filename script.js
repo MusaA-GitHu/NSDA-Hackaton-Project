@@ -93,6 +93,7 @@ const translations = {
         navLibrary: "Library",
         navHalaqat: "Halaqat",
         navEvents: "Events",
+        navActivities: "Activities",
         navSectors: "Join Sectors",
         navSignIn: "Sign In",
         navSignUp: "Sign Up",
@@ -110,6 +111,34 @@ const translations = {
         azkarMorning: "Morning",
         azkarEvening: "Evening",
         language: "Language",
+        // Activities Section
+        activitiesTitle: "Muslim Student Community Activities",
+        communityGathering: "Community Gathering",
+        unityBrotherhood: "Unity and Brotherhood",
+        islamicStudies: "Islamic Studies Circle",
+        knowledgeSharing: "Knowledge Sharing Sessions",
+        sportsCompetition: "Sports Competition",
+        physicalFitness: "Physical Fitness & Team Building",
+        charityOutreach: "Charity Outreach",
+        communityService: "Community Service Projects",
+        culturalExchange: "Cultural Exchange",
+        diversityCelebration: "Celebrating Diversity",
+        leadershipTraining: "Leadership Training",
+        skillsDevelopment: "Skills & Personal Development",
+        // Sectors Section
+        joinTeam: "Join Team",
+        memberSectorRegistration: "Member Sector Registration",
+        brothersSectors: "Brothers' Sectors",
+        sistersSectors: "Sisters' Sectors",
+        // About Section
+        aboutTabMission: "Mission",
+        aboutTabVision: "Vision",
+        aboutTabObjectives: "Objectives",
+        aboutMissionText: "Our mission is to unite Muslim students across Ethiopia, fostering a strong sense of community, spiritual growth, and academic excellence. We aim to create an environment where students can practice their faith freely, engage in meaningful dialogue, and contribute positively to society.",
+        aboutVisionText: "We envision a vibrant community of Ethiopian Muslim students who are well-grounded in their faith, excel academically, and serve as positive role models in their communities. Through knowledge sharing, charitable work, and mutual support, we strive to build a generation of leaders committed to both their religious values and societal progress.",
+        aboutObjectivesList: "<li>Promote Islamic knowledge and understanding among students</li><li>Facilitate networking and collaboration between Muslim students</li><li>Organize educational, social, and charitable activities</li><li>Support students in their academic pursuits</li><li>Advocate for the rights and interests of Muslim students</li><li>Strengthen ties between students and the broader Muslim community</li>",
+        // Gallery Section
+        ourCommunity: "Our Community"
     },
     ar: {
         navHome: "الرئيسية",
@@ -117,6 +146,7 @@ const translations = {
         navLibrary: "المكتبة",
         navHalaqat: "الحلقات",
         navEvents: "الفاعاليات",
+        navActivities: "الأنشطة",
         navSectors: "انضم للقطاعات",
         navSignIn: "تسجيل الدخول",
         navSignUp: "تسجيل جديد",
@@ -132,50 +162,136 @@ const translations = {
         azkarMorning: "الصباح",
         azkarEvening: "المساء",
         language: "اللغة",
+        // Activities Section
+        activitiesTitle: "أنشطة طلاب الجماعة الإسلامية",
+        communityGathering: "التجمع المجتمعي",
+        unityBrotherhood: "الوحدة والأُخوة",
+        islamicStudies: "دائرة الدراسات الإسلامية",
+        knowledgeSharing: "جلسات مشاركة المعرفة",
+        sportsCompetition: "مسابقة رياضية",
+        physicalFitness: "اللياقة البدنية وبناء الفريق",
+        charityOutreach: " Outreach الخيري",
+        communityService: "مشاريع خدمة المجتمع",
+        culturalExchange: "تبادل ثقافي",
+        diversityCelebration: "الاحتفال بالتنوع",
+        leadershipTraining: "تدريب القيادة",
+        skillsDevelopment: "تطوير المهارات والذات",
+        // Sectors Section
+        joinTeam: "انضم للفريق",
+        memberSectorRegistration: "تسجيل قطاع الأعضاء",
+        brothersSectors: "قطاع الأخوة",
+        sistersSectors: "قطاع الأخوات",
+        // About Section
+        aboutTabMission: "الرسالة",
+        aboutTabVision: "الرؤية",
+        aboutTabObjectives: "الأهداف",
+        aboutMissionText: "رسالتنا هي توحيد الطلاب المسلمين في جميع أنحاء إثيوبيا، وتعزيز شعور قوي بالمجتمع، والنمو الروحي، والتميز الأكاديمي. نهدف إلى خلق بيئة يمكن للطلاب فيها ممارسة إيمانهم بحرية، والمشاركة في حوار ذي مغزى، والمساهمة بشكل إيجابي في المجتمع.",
+        aboutVisionText: "نتصور مجتمعاً نشيطاً من طلاب جامعات إثيوبيا المسلمين الذين هم على دراية جيدة بإيمانهم، ويتفوقون أكاديمياً، ويكونون قدوة إيجابية في مجتمعاتهم. من خلال مشاركة المعرفة، والعمل الخيري، والدعم المتبادل، نسعى لبناء جيل من القادة ملتزمين بكل من قيمهم الدينية والتقدم المجتمعي.",
+        aboutObjectivesList: "<li>تعزيز المعرفة الإسلامية والفهم بين الطلاب</li><li>تسهيل الشبكات والتعاون بين الطلاب المسلمين</li><li>تنظيم الأنشطة التعليمية والاجتماعية والخيرية</li><li>دعم الطلاب في سعيهم الأكاديمي</li><li>الدفاع عن حقوق ومصالح الطلاب المسلمين</li><li>تعزيز الروابط بين الطلاب والمجتمع الإسلامي الأوسع</li>",
+        // Gallery Section
+        ourCommunity: "مجتمعنا"
     },
     am: {
         navHome: "ዋና ገጽ",
         navAbout: "ስለ እኛ",
-        navLibrary: "ห้องสมุด",
-        navHalaqat: "Halaqat",
+        navLibrary: "ቤተ መጻሕፍት",
+        navHalaqat: "ክፍሎች",
         navEvents: "ክስተቶች",
+        navActivities: "እንቅስቃሴዎች",
         navSectors: "ክፍልን ይቀላቀሉ",
         navSignIn: "ግባ",
-        navSignUp: "ይመዝገibu",
-        heroTitle: "ዕውቀትን ፈልጉ፣ ሰብአawiነትን አገልግሉ",
-        heroSubtitle: "የኢትዮጵያ ሙስሊム ተማሪዎች ይፋዊ መግቢያ። የእውቀት κύκሎችን ይቀላቀሉ፣ በበጎ አድራጎት ይሳተፉ እና ከማህበረሰብዎ ጋር ይገናኙ።",
+        navSignUp: "ይመዝገቡ",
+        heroTitle: "ዕውቀትን ፈልጉ፣ ሰብኣዉነትን አገልግሉ",
+        heroSubtitle: "የኢትዮጵያ ሙስሊም ተማሪዎች ይፋዊ መግቢያ። የእውቀት ክብቃሎችን ይቀላቀሉ፣ በበጎ አድራጎት ይሳተፉ እና ከማህበረሰብዎ ጋር ይገናኙ።",
         heroBtnJoin: "ጀመዓውን ይቀላቀሉ",
         heroBtnEvents: "መጪ ክስተቶችን ይመልከቱ",
         upcomingEvents: "መጪ ክስተቶች እና ማስታወቂያዎች",
         eventsPlaceholder: "ተለይተው የቀረቡ የክስተቶች ተንሸራታች እዚህ ይተገበራል።",
         explorePortal: "ገፆቻችንን ያስሱ",
-        prayerTimes: "የ铮ሎት ጊዜያት",
+        prayerTimes: "የፀሎት ጊዜያት",
         dailyAzkar: "ዕለታዊ አዝካር",
-        azkarMorning: "Morning",
-        azkarEvening: "Evening",
+        azkarMorning: "ጠዋት",
+        azkarEvening: "ምሽት",
         language: "ቋንቋ",
+        // Activities Section
+        activitiesTitle: "የሞስሌም ተማሪዎች የማህበረሰብ እንቅስቃሴዎች",
+        communityGathering: "የማህበረሰብ ተመራጭ",
+        unityBrotherhood: "አንድነት እና አህያትነት",
+        islamicStudies: "የኢስላም የመማር ክብቃል",
+        knowledgeSharing: "የእውቀት ማካፈል ክፍለ ጊዜዎች",
+        sportsCompetition: "የስፖርት ውድድር",
+        physicalFitness: "አካል ጥበቃ እና የቡድን ግንባታ",
+        charityOutreach: "የሰናይት ድጋፍ",
+        communityService: "የማህበረሰብ የአገልግሎት ፕሮጀክቶች",
+        culturalExchange: "የባህል ልውውጥ",
+        diversityCelebration: "የተለያዩነት ዕለት",
+        leadershipTraining: "የመሪነት ስልጠና",
+        skillsDevelopment: "የተለያዩ ችሎታዎች እና የግል እድገት",
+        // Sectors Section
+        joinTeam: "ቡድን ይቀላቀሉ",
+        memberSectorRegistration: "የአባል የክፍል ምዝገባ",
+        brothersSectors: "የወንዶች ክፍሎች",
+        sistersSectors: "የሴቶች ክፍሎች",
+        // About Section
+        aboutTabMission: "ተልዕኮ",
+        aboutTabVision: "እይታ",
+        aboutTabObjectives: "አላማዎች",
+        aboutMissionText: "ተልዕኮቻችን በኢትዮጵያ ዙሪያ ያሉ ሙስሊም ተማሪዎችን ማዋሃድ፣ ጠንካራ የማህበረሰብ ስሜት፣ መንፈሳዊ ጨመር፣ እና አካዳሚክ መሪነትን ማበልጸግ ነው። ተማሪዎች እምነታቸውን በነፃነት ማተም፣ በአስተዋፅኦ ውይይት መሳተፍ፣ እና በማህበረሰቡ ውስጥ በአዎንታዊ መንገድ ማሳተፍ የሚችሉበትን አካባቢ መፍጠር ነው።",
+        aboutVisionText: "የኢትዮጵያ ሙስሊም ተማሪዎች በእምነታቸው ላይ የተመሰረተ፣ በአካዳሚክ መንገድ የተሻሉ፣ እና በማህበረሰባቸው ውስጥ አዎንታዊ ምሳሌ የሚሆኑ ንቁ ማህበረሰብን እንመልከታለን። በእውቀት ማካፈል፣ በሰናይት መሥራት፣ እና በአጋራ ድጋፍ በኩል፣ ለሁለቱም የእምነታቸው እሴት እና ማህበራዊ እድገት የተጋባ የመሪነት እድሜ ለመፍጠር እንሰራለን።",
+        aboutObjectivesList: "<li>በተማሪዎች መካከል የኢስላም እውቀት እና መረዳትን ማስፋፋት</li><li>ሙስሊም ተማሪዎች መካከል ኔትዎርክ እና ትብብርን ማንቃት</li><li>የትምህርት፣ ማህበራዊ እና የሰናይት እንቅስቃሴዎችን ማደራጀት</li><li>ተማሪዎችን በአካዳሚክ መንገድ ማደገፍ</li><li>የሙስሊም ተማሪዎች መብቶች እና ፍላጎቶችን መከላከል</li><li>ተማሪዎች እና በሰፊው የሞስሌም ማህበረሰብ መካከል ያላቸውን ግንኙነቶች ማጎዳት</li>",
+        // Gallery Section
+        ourCommunity: "የእኛ ማህበረሰብ"
     },
     om: {
         navHome: "Fuullee",
-        navAbout: "Waa'ee",
+        navAbout: "Waa'ee Keenya",
         navLibrary: "Mana Kitaabaa",
-        navHalaqat: "Halaqaat",
+        navHalaqat: "Kutaalee Barumsaa",
         navEvents: "Tattaaffiiwwan",
+        navActivities: "Hojiiwwan",
         navSectors: "Damee Itti Makami",
         navSignIn: "Seeni",
         navSignUp: "Galmaa'i",
-        heroTitle: "Beekumsa Barbaadaa, Uummata Tajaajilaa",
-        heroSubtitle: "Xaroon barattoota Muslimaa Itoophiyaa kan offiziyaala. Marsaa beekumsaa irratti hirmaadhaa, tola-ooltummaatti qooda fudhadhaa, fi hawaasa keessan waliin wal qunnamaa.",
-        heroBtnJoin: "Jemea'atti Makami",
+        heroTitle: "Beekumsa Barbaadaa, Ummata Tajaajilaa",
+        heroSubtitle: "Poortaala barattoota Muslimaa Itoophiyaa kan offishiyaala. Marsaa beekumsaa irratti hirmaadhaa, tola-ooltummaatti qooda fudhadhaa, fi hawaasa keessan waliin wal qunnamaa.",
+        heroBtnJoin: "Jama'atti Makami",
         heroBtnEvents: "Tattaaffiiwwan Dhufan Ilaali",
-        upcomingEvents: "Tattaaffiiwwan Dhufanii fi Beeksifoota",
-        eventsPlaceholder: "Slideriin tattaaffiiwwan filatamoo asitti ni hojjetama.",
-        explorePortal: "Xaroon keenya Sakatta'i",
+        upcomingEvents: "Tattaaffiiwwan Dhufanii fi Beeksisoota",
+        eventsPlaceholder: "Tattaaffiiwwan filatamoon asitti ni gaggeeffamu.",
+        explorePortal: "Poortaala keenya Sakatta'i",
         prayerTimes: "Yeroo Salaataa",
         dailyAzkar: "Azkaara Guyyaa",
         azkarMorning: "Ganama",
         azkarEvening: "Galagala",
         language: "Afaan",
+        // Activities Section
+        activitiesTitle: "Hojiiwwan Barattoota Muslimaa",
+        communityGathering: "Walqunnamtii Hawaasaa",
+        unityBrotherhood: "Marsaa fi Waliiggee",
+        islamicStudies: "Kutaalee Barsiisa Islamummaa",
+        knowledgeSharing: "Yeroowwan Kennaa Beekumsaa",
+        sportsCompetition: "Waldorgommii Spoortii",
+        physicalFitness: "Sochii qaamaa fi Ijaarsa Garee",
+        charityOutreach: "Balaa Namoomaa",
+        communityService: "Piroojektiiwwan Tajaajilaa Hawaasaa",
+        culturalExchange: "Walbarsiisa Aadaa",
+        diversityCelebration: "Beekumsa Adda Addaa",
+        leadershipTraining: "Barumsa Hoggansaa",
+        skillsDevelopment: "Sagantaa fi Bilisummaa",
+        // Sectors Section
+        joinTeam: "Garee Irra Galmaa'i",
+        memberSectorRegistration: "Galmee Damee Miseensaa",
+        brothersSectors: "Dameewwan dhiirotaa",
+        sistersSectors: "Dameewwan Dubartootaa",
+        // About Section
+        aboutTabMission: "Ergama",
+        aboutTabVision: "Mul'ata",
+        aboutTabObjectives: "Kaayyoowwan",
+        aboutMissionText: "Ergamni keenya barattoota Muslimaa Itoophiyaa hunda keessa jiran walitti dhufuun, hawaasa cimaa, bilisaan namaa fi mirgaan barnoota guddaan horatan dhugsaanuu dha. Barattootni amantii isaanii bilisummaan akka taphatan, haalli waliigaltee gaarii ta'e keessatti akka seenu fi hawaasa keessatti gumaacha gaarii ta'e kennanif bakka uumuun barbaadna.",
+        aboutVisionText: "Barattoota Muslimaa Itoophiyaa sirna barnoota guddaan horatanii, amantii isaanii irratti bilisaan namaa ta'anii, hawaasa keessatti fakkeessaa gaarii ta'anii mul'atu hawaasa carraa dubbifna. Bakaka beekumsaa, hojiiwwan namaaf kenname fi deeggarsi walii keessatti, gosa tokko ta'e sirna amantii fi argamuu hawaasaa waliin wal qabsiisuuf yaalaa jirra.",
+        aboutObjectivesList: "<li>Barattoota keessatti beekumsa Islamummaa fi hubannoo dabaluun</li><li>Barattoota Muslimaa gidduu walqunnamtii fi tibbiraa saaxiluun</li><li>Hojiiwwan barsiisaa, hawaasummaa fi namaaf kenname adeemsifachuu</li><li>Barattoota barnoota isaaniif deeggarsuu</li><li>Mirga fi barbaachisa barattoota Muslimaa kakaasuu</li><li>Barattoota fi hawaasni guddaan Muslimaa gidduu walqunnamtii cimisuu</li>",
+        // Gallery Section
+        ourCommunity: "Hawaasa Keenya"
     }
 };
 
@@ -183,7 +299,8 @@ const translations = {
 // but explicitly attach required functions to the window object for inline HTML event handlers.
 
 (function() {
-    
+    let currentLanguage = 'en'; // Default language
+
     // --- NAVIGATION LOGIC ---
     function navigateTo(sectionId) {
         // Hide all sections
@@ -241,7 +358,32 @@ const translations = {
     }
 
     // --- I18N & LANGUAGE SWITCHING ---
+    // Function to set the language and synchronize between desktop and mobile selectors
     function setLanguage(lang) {
+        // Update current language
+        currentLanguage = lang;
+        
+        // Update both desktop and mobile language selectors
+        const desktopSelector = document.getElementById('lang-select-nav');
+        const mobileSelector = document.getElementById('lang-select-mobile');
+        
+        if (desktopSelector && desktopSelector.value !== lang) {
+            desktopSelector.value = lang;
+        }
+        
+        if (mobileSelector && mobileSelector.value !== lang) {
+            mobileSelector.value = lang;
+        }
+        
+        // Store language preference
+        localStorage.setItem('userLanguage', lang);
+        
+        // Update page content based on selected language
+        updatePageLanguage(lang);
+    }
+    
+    // Function to update page language
+    function updatePageLanguage(lang) {
         const html = document.documentElement;
         html.lang = lang;
         html.dir = lang === 'ar' ? 'rtl' : 'ltr';
@@ -253,12 +395,6 @@ const translations = {
                 el.textContent = translations[lang][key];
             }
         });
-
-        // Persist user's choice
-        localStorage.setItem('userLanguage', lang);
-
-        // Sync both language switchers
-        document.getElementById('lang-select-nav').value = lang;
     }
 
     // --- DATA POPULATION ---
@@ -397,7 +533,9 @@ const translations = {
     }
     
     // Helper function to show a custom modal (replacing alert())
-    function showModal(title, message, type) {
+    function showModal(title, message, type, closeable = true) {
+        console.log('showModal called with:', { title, message, type, closeable });
+        
         let modal = document.getElementById('custom-modal');
         if (!modal) {
             modal = document.createElement('div');
@@ -406,17 +544,34 @@ const translations = {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 id="modal-title"></h3>
-                        <button class="close-btn" onclick="document.getElementById('custom-modal').classList.remove('active')">&times;</button>
+                        <button class="close-btn" id="modal-close-btn">&times;</button>
                     </div>
-                    <p id="modal-message"></p>
-                    <button class="btn btn-primary" onclick="document.getElementById('custom-modal').classList.remove('active')">Close</button>
+                    <div id="modal-content"></div>
+                    <button class="btn btn-primary" id="modal-close-button">Close</button>
                 </div>
             `;
             document.body.appendChild(modal);
+            
+            // Add event listeners for close buttons
+            document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+            document.getElementById('modal-close-button').addEventListener('click', closeModal);
         }
         
         document.getElementById('modal-title').textContent = title;
-        document.getElementById('modal-message').textContent = message;
+        
+        // Check if message is HTML content or plain text
+        const modalContent = document.getElementById('modal-content');
+        if (typeof message === 'string' && message.includes('<')) {
+            // HTML content
+            modalContent.innerHTML = message;
+        } else {
+            // Plain text
+            modalContent.innerHTML = `<p id="modal-message">${message}</p>`;
+        }
+        
+        // Show or hide close buttons based on closeable parameter
+        document.getElementById('modal-close-btn').style.display = closeable ? 'block' : 'none';
+        document.getElementById('modal-close-button').style.display = closeable ? 'block' : 'none';
         
         // Apply type-specific styling via classes
         const modalHeader = modal.querySelector('.modal-header');
@@ -425,6 +580,15 @@ const translations = {
             modalHeader.classList.add(type);
         }
         modal.classList.add('active');
+    }
+    
+    // Function to close the modal
+    function closeModal() {
+        console.log('closeModal called');
+        const modal = document.getElementById('custom-modal');
+        if (modal) {
+            modal.classList.remove('active');
+        }
     }
 
     // --- SECTORS HANDLING ---
@@ -448,10 +612,90 @@ const translations = {
                 </div>
                 <h3>${s.name}</h3>
                 <p style="color:#666; font-size:0.9rem; margin:10px 0;">Register to volunteer for the ${gender === 'male' ? 'Brothers' : 'Sisters'} team.</p>
-                <button class="btn btn-outline" onclick="showModal('Sector Application', 'You have expressed interest in the ${s.name}. We will contact you soon!', 'success')">Join Team</button>
+                <button class="btn btn-outline sector-join-btn" 
+                        data-sector-id="${s.id}" 
+                        data-sector-name="${s.name}" 
+                        data-gender="${gender}">${translations[currentLanguage].joinTeam || 'Join Team'}</button>
             </div>
         `).join('');
+        
+        // Add event listeners to the buttons
+        const joinButtons = container.querySelectorAll('.sector-join-btn');
+        joinButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const sectorId = this.getAttribute('data-sector-id');
+                const sectorName = this.getAttribute('data-sector-name');
+                const gender = this.getAttribute('data-gender');
+                openSectorRegistration(sectorId, sectorName, gender);
+            });
+        });
+        
         lucide.createIcons();
+    }
+
+    // Function to open sector registration form
+    function openSectorRegistration(sectorId, sectorName, gender) {
+        // Set the sector ID in the hidden field
+        document.getElementById('sector-id').value = sectorId;
+        
+        // Update form title to show which sector is being registered for
+        const formTitle = document.querySelector('#sector-registration .section-title');
+        if (formTitle) {
+            formTitle.textContent = `Sector Registration: ${sectorName}`;
+        }
+        
+        // Set gender if provided
+        if (gender) {
+            document.getElementById('gender').value = gender;
+        }
+        
+        // Populate universities dropdown
+        const universitySelect = document.getElementById('university');
+        // Clear existing options except the first one
+        universitySelect.innerHTML = '<option value="">Select University</option>';
+        
+        // Add Ethiopian universities
+        ETHIOPIAN_UNIVERSITIES.forEach(university => {
+            const option = document.createElement('option');
+            option.value = university;
+            option.textContent = university;
+            universitySelect.appendChild(option);
+        });
+        
+        // Navigate to the registration form
+        navigateTo('sector-registration');
+    }
+    
+    // Function to handle sector registration form submission
+    function handleSectorRegistration(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+        
+        // Get sector name for display
+        const sector = SECTORS.find(s => s.id === data['sector-id']);
+        const sectorName = sector ? sector.name : 'sector';
+        
+        // In a real application, you would send this data to a server
+        // For now, we'll show a success message
+        console.log('Sector Registration Data:', data);
+        
+        // Show success message
+        showModal(
+            'Registration Submitted', 
+            `Thank you for registering for the ${sectorName}. We will review your application and contact you soon!`, 
+            'success'
+        );
+        
+        // Reset form
+        e.target.reset();
+        
+        // Return to sectors page
+        setTimeout(() => {
+            navigateTo('sectors');
+        }, 2000);
     }
 
     // --- LIBRARY LOGIC ---
@@ -531,9 +775,119 @@ const translations = {
                 <td class="halaqa-day">${item.day}</td>
                 <td>${item.time}</td>
                 <td>${item.sheikh}</td>
-                <td><button class="btn btn-small" onclick="showModal('Halaqa Enrollment', 'You have expressed interest in the Halaqa: ${item.topic}.', 'success')">Join</button></td>
+                <td><button class="btn btn-small halaqat-join-btn" data-topic="${item.topic}">Join</button></td>
             </tr>
         `).join('');
+    }
+    
+    // Add event delegation for halaqat join buttons
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('halaqat-join-btn')) {
+            console.log('Halaqat join button clicked (delegated)');
+            const topic = e.target.getAttribute('data-topic');
+            console.log('Topic:', topic);
+            showHalaqatForm(topic);
+        }
+    });
+
+    // Function to handle halaqat registration form submission
+    function handleHalaqatRegistration(e) {
+        console.log('handleHalaqatRegistration called');
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+        
+        // In a real application, you would send this data to a server
+        // For now, we'll show a success message
+        console.log('Halaqat Registration Data:', data);
+        
+        // Show success message
+        showModal(
+            'Registration Submitted', 
+            `Thank you for registering for the ${data['halaqat-topic']} halaqat. We will contact you with session details soon!`, 
+            'success'
+        );
+        
+        // Reset form
+        e.target.reset();
+        
+        // Close the modal after a delay
+        setTimeout(() => {
+            closeModal();
+        }, 2000);
+    }
+
+    // Function to show halaqat registration form in a modal
+    function showHalaqatForm(topic) {
+        console.log('showHalaqatForm called with topic:', topic);
+        
+        // Create the form HTML
+        const formHtml = `
+            <div class="form-container" style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h3>Join Halaqat: ${topic}</h3>
+                <form id="halaqat-modal-form">
+                    <input type="hidden" id="halaqat-topic" name="halaqat-topic" value="${topic}">
+                    
+                    <div class="form-group">
+                        <label for="halaqat-name">Full Name *</label>
+                        <input type="text" id="halaqat-name" name="halaqat-name" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="halaqat-email">Email Address *</label>
+                            <input type="email" id="halaqat-email" name="halaqat-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="halaqat-phone">Phone Number</label>
+                            <input type="tel" id="halaqat-phone" name="halaqat-phone">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="halaqat-experience">Previous Islamic Knowledge Experience</label>
+                        <textarea id="halaqat-experience" name="halaqat-experience" rows="3" placeholder="Briefly describe your previous experience with Islamic studies..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="halaqat-goals">Learning Goals</label>
+                        <textarea id="halaqat-goals" name="halaqat-goals" rows="3" placeholder="What do you hope to achieve from joining this halaqat?"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="halaqat-cancel-btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Join Halaqat</button>
+                    </div>
+                </form>
+            </div>
+        `;
+        
+        // Show the form in a modal
+        showModal('Halaqat Registration', formHtml, 'info', false);
+        
+        // Add event listeners to the form and cancel button
+        setTimeout(() => {
+            console.log('Setting up form event listeners');
+            const form = document.getElementById('halaqat-modal-form');
+            console.log('Form element:', form);
+            if (form) {
+                form.addEventListener('submit', handleHalaqatRegistration);
+                console.log('Form submit listener added');
+            } else {
+                console.log('Form not found');
+            }
+            
+            const cancelButton = document.getElementById('halaqat-cancel-btn');
+            console.log('Cancel button:', cancelButton);
+            if (cancelButton) {
+                cancelButton.addEventListener('click', closeModal);
+                console.log('Cancel button listener added');
+            } else {
+                console.log('Cancel button not found');
+            }
+        }, 100);
     }
 
     // --- ABOUT CONTENT ---
@@ -546,7 +900,7 @@ const translations = {
                 <div class="about-image-container">
                     <img src="images/real/community/community1.jpg" alt="Community gathering" class="about-image" onerror="this.style.display='none'">
                 </div>
-                <p>The Muslim Student Jama’a Portal is dedicated to nurturing a united, spiritually grounded community of Muslim students across Ethiopian campuses. Our mission is to empower students intellectually, socially, and spiritually by providing authentic Islamic resources, meaningful study circles, and opportunities for service. We offer access to Qur’an and Hadith study, halaqat, and community outreach, while promoting academic excellence and Islamic values.</p>`;
+                <p>The Muslim Student Jama’a Portal is dedicated to nurturing a united, spiritually grounded community of Muslim students across Ethiopian campuses. Our mission is to empower students intellectuallyually, socially, and spiritually by providing authentic Islamic resources, meaningful study circles, and opportunities for service. We offer access to Qur’an and Hadith study, halaqat, and community outreach, while promoting academic excellence and Islamic values.</p>`;
             }
         } else if (type === 'vision') {
             const visionContent = document.querySelector('#content-vision');
@@ -785,9 +1139,25 @@ document.addEventListener('DOMContentLoaded', () => {
         signupForm.addEventListener('submit', handleSignupSubmit);
     }
     
+    // Attach halaqat form submission listener
+    const halaqatForm = document.getElementById('halaqat-join-form');
+    if (halaqatForm) {
+        halaqatForm.addEventListener('submit', handleHalaqatRegistration);
+    }
+    
     // Set language from local storage or default to 'en'
     const userLang = localStorage.getItem('userLanguage') || 'en';
-    document.getElementById('lang-select-nav').value = userLang;
+    const desktopSelector = document.getElementById('lang-select-nav');
+    const mobileSelector = document.getElementById('lang-select-mobile');
+    
+    if (desktopSelector) {
+        desktopSelector.value = userLang;
+    }
+    
+    if (mobileSelector) {
+        mobileSelector.value = userLang;
+    }
+    
     setLanguage(userLang);
 
     // Handle initial hash routing or default to home
@@ -813,7 +1183,56 @@ document.addEventListener('DOMContentLoaded', () => {
     // Call initMapHandling when DOM is loaded
     document.addEventListener('DOMContentLoaded', function() {
         initMapHandling();
+        updateActivityCardIllustrations();
+        
+        // Add event listener for sector registration form
+        const sectorForm = document.getElementById('sector-registration-form');
+        if (sectorForm) {
+            sectorForm.addEventListener('submit', handleSectorRegistration);
+        }
     });
+
+    // Function to update activity card SVG illustrations with attractive colors and crisp rendering
+    function updateActivityCardIllustrations() {
+        // Define attractive color schemes
+        const colorSchemes = [
+            { bg: '#6B8BA4', accent: '#FFD93D' },  // Blue & Gold
+            { bg: '#6B8BA4', accent: '#6BCF7F' },  // Blue & Green
+            { bg: '#6B8BA4', accent: '#FF6B6B' },  // Blue & Red
+            { bg: '#6B8BA4', accent: '#9B5DE5' },  // Blue & Purple
+            { bg: '#6B8BA4', accent: '#FF9AA2' },  // Blue & Pink
+            { bg: '#6B8BA4', accent: '#4CC9F0' }   // Blue & Cyan
+        ];
+        
+        // Get all activity illustrations
+        const illustrations = document.querySelectorAll('.activity-illustration svg');
+        
+        illustrations.forEach((svg, index) => {
+            // Ensure SVG has proper attributes for crisp rendering
+            svg.setAttribute('shape-rendering', 'geometricPrecision');
+            svg.setAttribute('text-rendering', 'geometricPrecision');
+            svg.setAttribute('image-rendering', 'optimizeQuality');
+            svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+            
+            // Assign color scheme based on index
+            const scheme = colorSchemes[index % colorSchemes.length];
+            
+            // Update background rectangle
+            const bgRect = svg.querySelector('rect[width="100"][height="100"]');
+            if (bgRect) {
+                bgRect.setAttribute('fill', scheme.bg);
+            }
+            
+            // Update all other elements to use accent color
+            const elements = svg.querySelectorAll('circle, rect:not([width="100"]), path');
+            elements.forEach(element => {
+                element.setAttribute('fill', scheme.accent);
+                if (element.tagName === 'path') {
+                    element.setAttribute('stroke', scheme.accent);
+                }
+            });
+        });
+    }
     
     // --- Expose functions to the global scope for inline HTML event handlers ---
     window.setLanguage = setLanguage;
@@ -827,9 +1246,14 @@ document.addEventListener('DOMContentLoaded', () => {
     window.trackZikr = trackZikr; // New exposed function
     window.setAzkarTab = setAzkarTab;
     window.showModal = showModal; // New exposed function
+    window.closeModal = closeModal; // Expose close modal function
     window.toggleMobileEventsSubmenu = toggleMobileEventsSubmenu; // New exposed function
     window.showAboutTab = showAboutTab; // Expose about tab function
     window.handleMapError = handleMapError; // Expose map error function
+    window.openSectorRegistration = openSectorRegistration; // Expose sector registration function
+    window.handleSectorRegistration = handleSectorRegistration; // Expose sector registration handler
+    window.handleHalaqatRegistration = handleHalaqatRegistration; // Expose halaqat registration handler
+    window.showHalaqatForm = showHalaqatForm; // Expose halaqat form function
 
 })(); // End of self-executing function
 
